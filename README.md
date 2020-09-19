@@ -1,6 +1,11 @@
-# dedfx
+# Nuxt.js E-commerce Project
 
-> My great Nuxt.js project
+Hello, this is my first project in Nuxt.js.
+
+## To do
+- Category pages
+- Filters
+- Login/Register
 
 ## Build Setup
 

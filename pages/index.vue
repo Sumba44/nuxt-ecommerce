@@ -10,46 +10,26 @@
           <div class="category__filters">
             <h5>Categories</h5>
             <v-list>
-              <v-list-group
-                v-for="item in items"
-                :key="item.title"
-              >
+              <v-list-group v-for="item in items" :key="item.title">
                 <template v-slot:activator>
                   <v-list-item-content>
                     <v-list-item-title v-text="item.title"></v-list-item-title>
                   </v-list-item-content>
                 </template>
 
-                <v-list-item
-                  v-for="subItem in item.items"
-                  :key="subItem.title"
-                >
+                <v-list-item v-for="subItem in item.items" :key="subItem.title">
                   <v-list-item-content>
-                    <v-list-item-title
-                      v-text="subItem.title"
-                    ></v-list-item-title>
+                    <v-list-item-title v-text="subItem.title"></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-group>
             </v-list>
             <h5>Filter</h5>
-            <v-switch
-              v-model="switch1"
-              label="In Stock"
-              color="success"
-            ></v-switch>
+            <v-switch v-model="switch1" label="In Stock" color="success"></v-switch>
 
-            <v-switch
-              v-model="switch2"
-              label="Filtered"
-              color="success"
-            ></v-switch>
+            <v-switch v-model="switch2" label="Filtered" color="success"></v-switch>
 
-            <v-switch
-              v-model="switch3"
-              label="Online Distribution"
-              color="success"
-            ></v-switch>
+            <v-switch v-model="switch3" label="Online Distribution" color="success"></v-switch>
 
             <h5>Price range</h5>
             <div class="price__slider">
@@ -95,8 +75,7 @@
               deletable-chips
               outlined
               dense
-            >
-            </v-combobox>
+            ></v-combobox>
 
             <v-combobox
               :items="colors"
@@ -114,9 +93,7 @@
                   :color="getColor(data.item)"
                   @click:close="data.parent.selectItem(data.item)"
                   deletable-chips
-                >
-                  {{ data.item }}
-                </v-chip>
+                >{{ data.item }}</v-chip>
               </template>
             </v-combobox>
           </div>
@@ -129,8 +106,7 @@
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                    <font-awesome-icon :icon="['fas', 'sort']" class="mr-1" />
-                    Sort products
+                    <font-awesome-icon :icon="['fas', 'sort']" class="mr-1" />Sort products
                   </v-btn>
                 </template>
                 <v-list>
@@ -174,7 +150,7 @@
         </div>
       </div>
     </div>
-
+    <v-btn @click="breadcrumbsNext(2)">next</v-btn>
     <Pagination :items="pagination" />
     <Footer />
   </div>
@@ -188,6 +164,7 @@ import HomeCategories from "~/components/HomeCategories.vue";
 import StarRating from "vue-star-rating";
 import Pagination from "~/components/Pagination.vue";
 import Footer from "~/components/Footer.vue";
+import BreadcrumbsVue from "../components/Breadcrumbs.vue";
 
 export default {
   components: {
@@ -196,7 +173,7 @@ export default {
     HomeCategories,
     StarRating,
     Pagination,
-    Footer
+    Footer,
   },
 
   async asyncData({ params, error }) {
@@ -218,7 +195,7 @@ export default {
       games: null,
       pagination: [
         { link: "/brands", text: "1" },
-        { link: "", text: "2" }
+        { link: "", text: "2" },
       ],
       rating: rand,
       value1: [0, 60],
@@ -236,7 +213,7 @@ export default {
         { title: "Price (low to high)" },
         { title: "Price (high to low)" },
         { title: "Newest" },
-        { title: "Alphabetically" }
+        { title: "Alphabetically" },
       ],
       min: 0,
       max: 100,
@@ -246,7 +223,7 @@ export default {
         {
           action: "local_activity",
           title: "Attractions",
-          items: [{ title: "List Item" }]
+          items: [{ title: "List Item" }],
         },
         {
           action: "restaurant",
@@ -255,35 +232,35 @@ export default {
           items: [
             { title: "Breakfast & brunch" },
             { title: "New American" },
-            { title: "Sushi" }
-          ]
+            { title: "Sushi" },
+          ],
         },
         {
           action: "school",
           title: "Education",
-          items: [{ title: "List Item" }]
+          items: [{ title: "List Item" }],
         },
         {
           action: "directions_run",
           title: "Family",
-          items: [{ title: "List Item" }]
+          items: [{ title: "List Item" }],
         },
         {
           action: "healing",
           title: "Health",
-          items: [{ title: "List Item" }]
+          items: [{ title: "List Item" }],
         },
         {
           action: "content_cut",
           title: "Office",
-          items: [{ title: "List Item" }]
+          items: [{ title: "List Item" }],
         },
         {
           action: "local_offer",
           title: "Promotions",
-          items: [{ title: "List Item" }]
-        }
-      ]
+          items: [{ title: "List Item" }],
+        },
+      ],
     };
   },
 
@@ -298,7 +275,19 @@ export default {
       } else {
         return "black";
       }
-    }
+    },
+
+    async breadcrumbsNext(site) {
+      await axios
+        .get(`https://api.rawg.io/api/games?page=${site}`)
+        .then((res) => {
+          this.games = res.data.results;
+          console.log(res.data.results);
+        })
+        .catch((err) => {
+          error({ statusCode: 404, message: err.message });
+        });
+    },
   },
 
   watch: {
@@ -306,7 +295,7 @@ export default {
       if (val.length > 5) {
         this.$nextTick(() => this.model.pop());
       }
-    }
+    },
   },
 
   head() {

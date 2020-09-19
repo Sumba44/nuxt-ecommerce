@@ -1,3 +1,12 @@
+const axios = require('axios')
+// var routes = []
+// var allUsers = [{'username': 'username'}] // Getting users as an Array
+// for (var i = 0; i < allUsers.length; i++) {
+//   routeObject = {
+//     'url': '/profile/' + allUsers[i].username
+//   }
+//   routes.push(routeObject);
+// }
 
 export default {
   mode: 'universal',
@@ -8,6 +17,11 @@ export default {
   // router: {
   //   middleware: 'cart'
   // },
+
+  server: {
+    port: 8000, // default: 3000
+    host: '0.0.0.0' // default: localhost
+  },
   
   head: {
     title: "Nuxt Ecommerce" || '',
@@ -64,9 +78,23 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
     '@nuxtjs/style-resources',
+    '@nuxtjs/sitemap'
     // '@nuxtjs/auth',
     // ['cookie-universal-nuxt', { alias: 'cookies' }],
   ],
+
+  sitemap: {
+    exclude: [
+      '/cart'
+    ],
+    path: '/sitemap.xml',
+    gzip: true,
+    generate: false,
+    routes:  async () => {
+      let { data } = await axios.get("https://api.rawg.io/api/games")
+      return data.results.map(g => '/category/games/${g.id}')
+    }
+  },
 
   styleResources: {
     scss: ['~assets/scss/*.scss']

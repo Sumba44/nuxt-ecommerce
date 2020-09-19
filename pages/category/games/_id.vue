@@ -9,9 +9,7 @@
           md="6"
           class="product__image"
           :style="{ backgroundImage: `url(${games.background_image})` }"
-        >
-          <!-- <img :src="games.docs[0].smallImage" class="w-100" alt="cover" /> -->
-        </v-col>
+        ></v-col>
         <v-col cols="12" md="6" class="product__box">
           <h1 class="product__heading">{{ games.name }}</h1>
           <div class="product__code">Platform: {{ games.genres[0].name }} | Code: {{ games.id }}</div>
@@ -24,7 +22,7 @@
           </client-only>
           <div class="product__prices">
             <div class="product__price text-success">
-              <span class="current-price-display">{{ price }}.00€</span>
+              <span class="current-price-display">{{ Math.floor(Math.random() * 50 + 9) }}.00€</span>
             </div>
             <div class="product__tax">Tax included</div>
           </div>
@@ -42,7 +40,7 @@
           <div class="product__availability">
             <h5 class="text-success">
               In Stock
-              <span>({{ stockQantity }}pcs)</span>
+              <span>({{ Math.floor(Math.random() * 50 + 9) }}pcs)</span>
             </h5>
             <p>
               Next day delivery
@@ -55,7 +53,13 @@
             <div class="product-quantity flex-column flex-md-row row align-items-center no-gutters">
               <div class="qty col-auto vnis__wrapper">
                 <client-only>
-                  <NumberInputSpinner :min="0" :max="10" :step="1" v-model="quantity" :integerOnly="true" />
+                  <NumberInputSpinner
+                    :min="0"
+                    :max="10"
+                    :step="1"
+                    v-model="quantity"
+                    :integerOnly="true"
+                  />
                 </client-only>
               </div>
 
@@ -119,6 +123,18 @@
 
     <!-- Product details -->
     <div class="container">
+      <v-row>
+        <v-col>
+          <iframe
+            width="560"
+            height="315"
+            :src="'https://www.youtube.com/embed/' + games.clip.video"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </v-col>
+      </v-row>
       <div class="row">
         <div v-for="platform in games.platforms" :key="platform.id">
           {{ platform.platform.name }}
@@ -131,17 +147,6 @@
           <div v-html="games.description"></div>
         </div>
       </div>
-      <!-- <div class="row">
-        <div class="col">
-          <h4>Requirements</h4>
-          <h5>Minimal</h5>
-          <div>{{ games.docs[0].requirements.minimal }}</div>
-          <h5>Recommended</h5>
-          <div>{{ games.docs[0].requirements.recommended }}</div>
-          <h4>Restrictions</h4>
-          <div>{{ games.docs[0].restrictions }}</div>
-        </div>
-      </div>-->
     </div>
     <Footer />
   </div>
@@ -166,17 +171,15 @@ export default {
     StarRating,
   },
 
-  data() {
-    var rand = Math.floor(Math.random() * 5 + 3);
-    var randPrice = Math.floor(Math.random() * 50 + 9);
-    var randStock = Math.floor(Math.random() * 50 + 9);
+  props: {
+    id: String,
+  },
 
+  data: () => {
     return {
-      rating: rand,
-      games: null,
-      price: randPrice,
-      stockQantity: randStock,
-      quantity: 1
+      game: null,
+      price: null,
+      quantity: 1,
     };
   },
 
@@ -189,8 +192,22 @@ export default {
       })
       .catch((err) => {
         error({ statusCode: 404, message: err.message });
+        window.location.replace("/");
       });
   },
+
+  // created() {
+  //   axios
+  //     .get("https://api.rawg.io/api/games/?id=3498")
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       this.games = response.data;
+  //       console.log(this.games);
+  //     });
+  // },
 
   computed: {
     breadcrumbs() {

@@ -10,7 +10,12 @@
       </v-row>
       <v-row>
         <v-col v-if="orders.length < 1" class="d-flex justify-content-center align-items-center">
-          <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+          <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </v-col>
         <v-col v-else cols="12" md="8">
           <div v-if="orders.length >= 1">
@@ -30,8 +35,17 @@
                   <h5>{{ order.cart.name }}</h5>
                 </nuxt-link>
                 <div class="shopping-cart__product-code">code: {{ order.cart.id }}</div>
-                <div class="shopping-cart__current-price text-success">{{ order.cart.price }}€</div>
-                <p>Quantity: {{ order.cart.quantity }}pcs</p>
+                <div
+                  class="shopping-cart__current-price text-success"
+                >{{ order.cart.price * order.cart.quantity }}€</div>
+                <p class="shopping-cart__info-label">
+                  <b>Unit price:</b>
+                  {{ order.cart.price }}€
+                </p>
+                <p>
+                  <b>Quantity:</b>
+                  {{ order.cart.quantity }}pcs
+                </p>
               </div>
               <button type="button" class="shopping-cart__delete" @click="deleteOrder(index)">
                 <v-icon>mdi-trash-can</v-icon>
@@ -103,7 +117,9 @@ export default {
     recalculateTotals() {
       let sum = 0;
       for (let i = 0; i < this.$store.state.orders.length; i++) {
-        sum += parseFloat(this.$store.state.orders[i].cart.price);
+        sum +=
+          parseFloat(this.$store.state.orders[i].cart.price) *
+          this.$store.state.orders[i].cart.quantity;
       }
       this.totalPrice = sum;
     },
@@ -173,6 +189,11 @@ export default {
 .shopping-cart__delete {
   align-self: flex-start;
   margin-left: auto;
+}
+
+.shopping-cart__info-label {
+  font-size: 15px;
+  margin: 0;
 }
 
 .shopping-cart__total {
