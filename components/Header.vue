@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <div class="header__bg">
     <div class="games__slider position-relative">
       <div style="width: 100%; display: inline-block;">
         <div class="games-slider__parent">
@@ -18,14 +18,14 @@
         </div>
       </div>
     </div>
-  </header>
+  </div>
 </template>
 
 <script>
 </script>
 
 <style lang="scss">
-header {
+.header__bg {
   color: #fff;
 
   h3 {

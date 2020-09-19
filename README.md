@@ -3,10 +3,15 @@
 Hello, this is my first project in Nuxt.js.
 It is fetching games list from IGDM API. You can browse games, check details of games and add games to the cart.
 
+
 ## To do
 - Category pages
 - Filters
 - Login/Register
+
+## Frameworks & Technologies
+Vuetify
+BEM
 
 ## Build Setup
 
