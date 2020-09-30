@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="container home__categories__wrap">
-        <nuxt-link :to="'/category' + '/games/'">
+        <nuxt-link :to="'/category' + '/games/'" class="home__categories__href">
           <div class="home__categories">
             <img
               src="https://damido.sk/themes/games/assets/img/steam.png"
@@ -9,10 +9,10 @@
               style="opacity: 0.9;"
             />
             <p class="h3 home__categories__title">Steam</p>
-            <p class="text-mute">Steam platform</p>
+            <p class="home__categories__par">Steam platform</p>
           </div>
         </nuxt-link>
-        <a href="29-xbox">
+        <a href="29-xbox" class="home__categories__href">
           <div class="home__categories">
             <img
               src="https://damido.sk/themes/games/assets/img/xbox.png"
@@ -20,10 +20,10 @@
               style="opacity: 0.8;"
             />
             <p class="h3 home__categories__title">XBOX</p>
-            <p class="text-mute">XBOX Console</p>
+            <p class="home__categories__par">XBOX Console</p>
           </div>
         </a>
-        <a href="38-psn">
+        <a href="38-psn" class="home__categories__href">
           <div class="home__categories">
             <img
               src="https://damido.sk/themes/games/assets/img/playstation.png"
@@ -31,10 +31,10 @@
               style="opacity: 0.9;width: 110px;padding-bottom: 16px;"
             />
             <p class="h3 home__categories__title">PlayStation</p>
-            <p class="text-mute">PlayStation Console</p>
+            <p class="home__categories__par">PlayStation Console</p>
           </div>
         </a>
-        <a href="28-origin">
+        <a href="28-origin" class="home__categories__href">
           <div class="home__categories">
             <img
               src="https://damido.sk/themes/games/assets/img/origin.png"
@@ -42,10 +42,10 @@
               style="width: 132px;margin-top: 32px;padding-bottom: 30px;opacity: 0.8;"
             />
             <p class="h3 home__categories__title">Origin</p>
-            <p class="text-mute">Origin platform</p>
+            <p class="home__categories__par">Origin platform</p>
           </div>
         </a>
-        <a href="37-uplay">
+        <a href="37-uplay" class="home__categories__href">
           <div class="home__categories">
             <img
               src="https://damido.sk/themes/games/assets/img/uplay.png"
@@ -53,7 +53,7 @@
               style="width: 134px;margin-top: 22px;padding-bottom: 30px;opacity: 0.7;"
             />
             <p class="h3 home__categories__title">Uplay</p>
-            <p class="text-mute">Ubisoft Distribution</p>
+            <p class="home__categories__par">Ubisoft Distribution</p>
           </div>
         </a>
       </div>
@@ -115,6 +115,24 @@ export default {
   margin-top: 15px;
   padding-bottom: 10px;
   margin-bottom: 4px;
+}
+
+.home__categories__href {
+  text-decoration: none;
+}
+
+.home__categories__title {
+    color: #495057;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 15px;
+    text-transform: uppercase;
+    margin-bottom: 3px !important;
+}
+
+.home__categories__par {
+  font-weight: 300;
 }
 
 // .home__categories--gradient {

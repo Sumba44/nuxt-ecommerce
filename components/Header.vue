@@ -1,6 +1,6 @@
 <template>
   <div class="header__bg">
-    <div class="games__slider position-relative">
+    <div class="games__slider">
       <div style="width: 100%; display: inline-block;">
         <div class="games-slider__parent">
           <div class="games-slider__child"></div>
@@ -45,6 +45,11 @@
     margin-bottom: 45px;
   }
 }
+
+.games__slider {
+  position: relative;
+}
+
 .games-slider__parent {
   width: 100%;
   height: 600px;

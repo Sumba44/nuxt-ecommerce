@@ -24,27 +24,27 @@
               :key="order.id"
               class="col-12 shopping-cart__wrap"
             >
-              <nuxt-link :to="'/category/games/' + order.cart.id">
+              <nuxt-link :to="'/category/games/' + order.id">
                 <div
                   class="shopping-cart__image"
-                  :style="{ backgroundImage: `url(${order.cart.cover})` }"
+                  :style="{ backgroundImage: `url(${order.cover})` }"
                 ></div>
               </nuxt-link>
               <div>
-                <nuxt-link :to="'/category/games/' + order.cart.id">
-                  <h5>{{ order.cart.name }}</h5>
+                <nuxt-link :to="'/category/games/' + order.id">
+                  <h5>{{ order.name }}</h5>
                 </nuxt-link>
-                <div class="shopping-cart__product-code">code: {{ order.cart.id }}</div>
+                <div class="shopping-cart__product-code">code: {{ order.id }}</div>
                 <div
                   class="shopping-cart__current-price text-success"
-                >{{ order.cart.price * order.cart.quantity }}€</div>
+                >{{ order.price * order.quantity }}€</div>
                 <p class="shopping-cart__info-label">
                   <b>Unit price:</b>
-                  {{ order.cart.price }}€
+                  {{ order.price }}€
                 </p>
                 <p>
                   <b>Quantity:</b>
-                  {{ order.cart.quantity }}pcs
+                  {{ order.quantity }}pcs
                 </p>
               </div>
               <button type="button" class="shopping-cart__delete" @click="deleteOrder(index)">
@@ -77,7 +77,7 @@
               </span>
               <span class="price__total text-success">{{ totalPrice.toFixed(2) }}€</span>
             </div>
-            <v-btn color="success mt-8 mb-5" large block>Checkout</v-btn>
+            <v-btn @click="sendOrder()" color="success mt-8 mb-5" large block>Checkout</v-btn>
           </div>
         </v-col>
       </v-row>
@@ -88,6 +88,7 @@
 
 <script>
 // import { mapState } from 'vuex'
+import axios from "axios";
 import MenuTop from "~/components/MenuTop.vue";
 import Breadcrumbs from "~/components/Breadcrumbs.vue";
 import Footer from "~/components/Footer.vue";
@@ -118,11 +119,49 @@ export default {
       let sum = 0;
       for (let i = 0; i < this.$store.state.orders.length; i++) {
         sum +=
-          parseFloat(this.$store.state.orders[i].cart.price) *
-          this.$store.state.orders[i].cart.quantity;
+          parseFloat(this.$store.state.orders[i].price) *
+          this.$store.state.orders[i].quantity;
       }
       this.totalPrice = sum;
     },
+
+    formatDate(date) {
+        var hours = date.getHours();
+        var minutes = (date.getMinutes()<10?'0':'') + date.getMinutes();
+        var strTime = hours + ':' + minutes;
+        return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + strTime;
+     
+
+      // var d = new Date();
+      // var e = formatDate(d);
+  },
+    
+    // Send order to backend
+    async sendOrder() {
+
+      let date = this.formatDate(new Date());
+
+      await axios
+        .post(
+          "http://localhost:3000/api/addorder",
+          {
+            id: null,
+            cart: this.$store.state.orders,
+            date: date
+          },
+          {
+            headers: {
+              "Content-type": "application/json"
+            }
+          }
+        )
+        .catch(e => {
+          console.log(e);
+        })
+        .then(response => {
+          console.log("Order was sent successfully!");
+        });
+    }
   },
 
   computed: {

@@ -12,7 +12,7 @@
         ></v-col>
         <v-col cols="12" md="6" class="product__box">
           <h1 class="product__heading">{{ games.name }}</h1>
-          <div class="product__code">Platform: {{ games.genres[0].name }} | Code: {{ games.id }}</div>
+          <div class="product__code mb-2">Platform: {{ games.genres[0].name }} | Code: {{ games.id }}</div>
           <client-only>
             <StarRating
               :rating="parseInt(games.rating.toFixed(0))"
@@ -22,7 +22,7 @@
           </client-only>
           <div class="product__prices">
             <div class="product__price text-success">
-              <span class="current-price-display">{{ Math.floor(Math.random() * 50 + 9) }}.00€</span>
+              <span class="current-price-display">{{ price }}.00€</span>
             </div>
             <div class="product__tax">Tax included</div>
           </div>
@@ -65,14 +65,15 @@
 
               <div class="col">
                 <nuxt-link to="/cart">
-                  <button
+                  <v-btn
                     class="btn btn-success add-to-cart btn-lg btn-block btn-add-to-cart js-add-to-cart"
                     @click="addToCart()"
+                    color="primary"
                   >
                     <font-awesome-icon :icon="['fas', 'shopping-cart']" class="menu__icon" />
                     <span class="btn-add-to-cart__spinner" role="status" aria-hidden="true"></span>
                     Add to cart
-                  </button>
+                  </v-btn>
                 </nuxt-link>
               </div>
             </div>
@@ -178,7 +179,7 @@ export default {
   data: () => {
     return {
       game: null,
-      price: null,
+      price: Math.floor(Math.random() * 50 + 9),
       quantity: 1,
     };
   },

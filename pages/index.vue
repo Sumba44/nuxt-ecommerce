@@ -38,7 +38,7 @@
                 :max="max"
                 :min="min"
                 hide-details
-                class="align-center"
+                class="align-center position-relative"
               >
                 <template v-slot:prepend>
                   <v-text-field
@@ -58,7 +58,7 @@
                     hide-details
                     single-line
                     type="number"
-                    style="width: 60px"
+                    style="width: 33px"
                     @change="$set(range, 1, $event)"
                   ></v-text-field>
                 </template>
@@ -138,7 +138,7 @@
                     <StarRating
                       :rating="parseInt(game.rating.toFixed(0))"
                       :star-size="18"
-                      text-class="product__star-rating"
+                      text-class="product__star-rating d-none"
                       read-only
                     ></StarRating>
                   </client-only>
@@ -216,9 +216,9 @@ export default {
         { title: "Alphabetically" },
       ],
       min: 0,
-      max: 100,
+      max: 500,
       slider: 40,
-      range: [0, 100],
+      range: [0, 500],
       items: [
         {
           action: "local_activity",
@@ -320,6 +320,8 @@ export default {
 
 <style lang="scss">
 .category__product-wrap {
+  text-decoration: none;
+
   &:hover {
     color: $blue;
     text-shadow: none;

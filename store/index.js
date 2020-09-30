@@ -1,8 +1,6 @@
 export const state = () => ({
   user: "",
-  orders: [
-    
-  ],
+  orders: [],
 //   auth: false
 });
 
@@ -23,10 +21,7 @@ export const mutations = {
   },
 
   SET_CART(state, cart) {
-    state.orders.push({
-      cart,
-      time: Date.now()
-    })
+    state.orders.push(cart)
   },
 
   DELETE_ORDER(state, index){
