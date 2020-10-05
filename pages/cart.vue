@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div id="cart">
     <MenuTop />
+    <Header />
     <Breadcrumbs :items="breadcrumbs" />
     <v-container>
       <v-row>
@@ -89,6 +90,7 @@
 <script>
 // import { mapState } from 'vuex'
 import axios from "axios";
+import Header from "~/components/Header.vue"
 import MenuTop from "~/components/MenuTop.vue";
 import Breadcrumbs from "~/components/Breadcrumbs.vue";
 import Footer from "~/components/Footer.vue";
@@ -96,6 +98,7 @@ import Footer from "~/components/Footer.vue";
 export default {
   components: {
     MenuTop,
+    Header,
     Breadcrumbs,
     Footer,
   },

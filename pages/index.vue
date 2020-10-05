@@ -120,7 +120,7 @@
           <div class="row">
             <!-- doc.slug.substr(1) -->
             <nuxt-link
-              :to="'/category' + '/games/' + game.slug"
+              :to="game.genres[0].name + '/' + game.slug"
               v-for="game in games"
               :key="game.id"
               class="col-md-3 category__product-wrap"

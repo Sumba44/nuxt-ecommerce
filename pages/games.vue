@@ -171,30 +171,6 @@ export default {
       }
     },
   },
-
-  // ina verzia async data s premenou//////////////////////////
-  // async asyncData({ params }) {
-  //   let { data } = await axios.get(`https://sandboxapi.g2a.com/v1/products`, {
-  //     headers: {
-  //       authorization:
-  //         "qdaiciDiyMaTjxMt, 74026b3dc2c6db6a30a73e71cdb138b1e1b5eb7a97ced46689e2d28db1050875",
-  //     },
-  //   })
-
-  //   return { games: data }
-  // }
-
-  // ina verzia s FETCH data s premenou//////////////////////////
-  //   async fetch() {
-  //     const data = await fetch(`https://sandboxapi.g2a.com/v1/products`, {
-  //       headers: {
-  //         authorization: "qdaiciDiyMaTjxMt, 74026b3dc2c6db6a30a73e71cdb138b1e1b5eb7a97ced46689e2d28db1050875",
-  //       },
-  //     })
-  //     return {
-  //       games: data,
-  //     };
-  //   },
 };
 </script>
 

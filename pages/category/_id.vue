@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <nuxt-link
+    <!-- <nuxt-link
       :to="'/category' + '/games/' + doc.id"
       v-for="doc in games.docs"
       :key="doc.id"
@@ -15,32 +15,15 @@
         <br />
         {{ doc.developer }}
       </div>
-    </nuxt-link>
+    </nuxt-link> -->
   </div>
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
-  async asyncData({ params, error }) {
-    return axios
-      .get(
-        `https://sandboxapi.g2a.com/v1/products?platform=steam`,
-        {
-          headers: {
-            authorization:
-              "qdaiciDiyMaTjxMt, 74026b3dc2c6db6a30a73e71cdb138b1e1b5eb7a97ced46689e2d28db1050875",
-          },
-        }
-      )
-      .then((res) => {
-        return { games: res.data };
-      })
-      .catch((err) => {
-        error({ statusCode: 404, message: err.message });
-      });
-  },
+
 
   head() {
     return {

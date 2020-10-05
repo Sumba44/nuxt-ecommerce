@@ -1,63 +1,73 @@
 <template>
   <div>
-      <div class="container home__categories__wrap">
-        <nuxt-link :to="'/category' + '/games/'" class="home__categories__href">
-          <div class="home__categories">
-            <img
-              src="https://damido.sk/themes/games/assets/img/steam.png"
-              class="home__categories__img"
-              style="opacity: 0.9;"
-            />
-            <p class="h3 home__categories__title">Steam</p>
-            <p class="home__categories__par">Steam platform</p>
-          </div>
-        </nuxt-link>
-        <a href="29-xbox" class="home__categories__href">
-          <div class="home__categories">
-            <img
-              src="https://damido.sk/themes/games/assets/img/xbox.png"
-              class="home__categories__img"
-              style="opacity: 0.8;"
-            />
-            <p class="h3 home__categories__title">XBOX</p>
-            <p class="home__categories__par">XBOX Console</p>
-          </div>
-        </a>
-        <a href="38-psn" class="home__categories__href">
-          <div class="home__categories">
-            <img
-              src="https://damido.sk/themes/games/assets/img/playstation.png"
-              class="home__categories__img"
-              style="opacity: 0.9;width: 110px;padding-bottom: 16px;"
-            />
-            <p class="h3 home__categories__title">PlayStation</p>
-            <p class="home__categories__par">PlayStation Console</p>
-          </div>
-        </a>
-        <a href="28-origin" class="home__categories__href">
-          <div class="home__categories">
-            <img
-              src="https://damido.sk/themes/games/assets/img/origin.png"
-              class="home__categories__img"
-              style="width: 132px;margin-top: 32px;padding-bottom: 30px;opacity: 0.8;"
-            />
-            <p class="h3 home__categories__title">Origin</p>
-            <p class="home__categories__par">Origin platform</p>
-          </div>
-        </a>
-        <a href="37-uplay" class="home__categories__href">
-          <div class="home__categories">
-            <img
-              src="https://damido.sk/themes/games/assets/img/uplay.png"
-              class="home__categories__img"
-              style="width: 134px;margin-top: 22px;padding-bottom: 30px;opacity: 0.7;"
-            />
-            <p class="h3 home__categories__title">Uplay</p>
-            <p class="home__categories__par">Ubisoft Distribution</p>
-          </div>
-        </a>
-      </div>
-      <!-- <div class="home__categories--gradient"></div> -->
+    <div class="container home__categories__wrap">
+      <nuxt-link :to="'action'" :id="1" class="home__categories__href">
+        <div class="home__categories">
+          <img
+            src="https://damido.sk/themes/games/assets/img/steam.png"
+            class="home__categories__img"
+            style="opacity: 0.9"
+          />
+          <p class="h3 home__categories__title">Steam</p>
+          <p class="home__categories__par">Steam platform</p>
+        </div>
+      </nuxt-link>
+      <a href="29-xbox" class="home__categories__href">
+        <div class="home__categories">
+          <img
+            src="https://damido.sk/themes/games/assets/img/xbox.png"
+            class="home__categories__img"
+            style="opacity: 0.8"
+          />
+          <p class="h3 home__categories__title">XBOX</p>
+          <p class="home__categories__par">XBOX Console</p>
+        </div>
+      </a>
+      <a href="38-psn" class="home__categories__href">
+        <div class="home__categories">
+          <img
+            src="https://damido.sk/themes/games/assets/img/playstation.png"
+            class="home__categories__img"
+            style="opacity: 0.9; width: 110px; padding-bottom: 16px"
+          />
+          <p class="h3 home__categories__title">PlayStation</p>
+          <p class="home__categories__par">PlayStation Console</p>
+        </div>
+      </a>
+      <a href="28-origin" class="home__categories__href">
+        <div class="home__categories">
+          <img
+            src="https://damido.sk/themes/games/assets/img/origin.png"
+            class="home__categories__img"
+            style="
+              width: 132px;
+              margin-top: 32px;
+              padding-bottom: 30px;
+              opacity: 0.8;
+            "
+          />
+          <p class="h3 home__categories__title">Origin</p>
+          <p class="home__categories__par">Origin platform</p>
+        </div>
+      </a>
+      <a href="37-uplay" class="home__categories__href">
+        <div class="home__categories">
+          <img
+            src="https://damido.sk/themes/games/assets/img/uplay.png"
+            class="home__categories__img"
+            style="
+              width: 134px;
+              margin-top: 22px;
+              padding-bottom: 30px;
+              opacity: 0.7;
+            "
+          />
+          <p class="h3 home__categories__title">Uplay</p>
+          <p class="home__categories__par">Ubisoft Distribution</p>
+        </div>
+      </a>
+    </div>
+    <!-- <div class="home__categories--gradient"></div> -->
   </div>
 </template>
 
@@ -65,23 +75,11 @@
 import axios from "axios";
 
 export default {
-  async asyncData({ params, error }) {
-    return axios
-      .get(
-        `https://sandboxapi.g2a.com/v1/products?platform=${params.platform}`,
-        {
-          headers: {
-            authorization:
-              "qdaiciDiyMaTjxMt, 74026b3dc2c6db6a30a73e71cdb138b1e1b5eb7a97ced46689e2d28db1050875",
-          },
-        }
-      )
-      .then((res) => {
-        return { games: res.data };
-      })
-      .catch((err) => {
-        error({ statusCode: 404, message: err.message });
-      });
+  data() {
+     return {
+      games: null,
+      genre: 1
+    };
   },
 };
 </script>
@@ -122,13 +120,13 @@ export default {
 }
 
 .home__categories__title {
-    color: #495057;
-    text-align: center;
-    font-weight: 600;
-    font-size: 15px;
-    margin-top: 15px;
-    text-transform: uppercase;
-    margin-bottom: 3px !important;
+  color: #495057;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 15px;
+  text-transform: uppercase;
+  margin-bottom: 3px !important;
 }
 
 .home__categories__par {

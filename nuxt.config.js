@@ -64,7 +64,7 @@ export default {
 
   fontawesome: {
     icons: {
-      solid: ['faSort', 'faBusinessTime', 'faSmile', 'faTruck', 'faInfoCircle', 'faHome', 'faShoppingCart', 'faUser', 'faEnvelope', 'faPhone', 'faGlobe', 'faLaptopCode', 'faGem', 'faHeart'],
+      solid: ['faBars', 'faSort', 'faBusinessTime', 'faSmile', 'faTruck', 'faInfoCircle', 'faHome', 'faShoppingCart', 'faUser', 'faEnvelope', 'faPhone', 'faGlobe', 'faLaptopCode', 'faGem', 'faHeart'],
       brands: ['faApple', 'faFacebook', 'faInstagram', 'faYoutube', 'faLinkedin', 'faTwitter', 'faHtml5', 'faCss3', 'faJs', 'faPhp', 'faWordpress', 'faReact', 'faVuejs', 'faSass', 'faGithub', 'faBootstrap',],
     }
   },

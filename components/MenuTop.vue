@@ -1,26 +1,92 @@
 <template>
-  <v-toolbar dense color="transparent">
-    <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+  <div>
+    <v-toolbar dense color="transparent">
+      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
-    <v-toolbar-title>
-      <nuxt-link to="/">
-        <Logo />
+      <v-toolbar-title>
+        <nuxt-link to="/">
+          <Logo />
+        </nuxt-link>
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <nuxt-link to="/login" class="mr-md-5">
+        <font-awesome-icon :icon="['fas', 'user']" class="menu__icon mr-2" />
+        <!-- <span>Sign In / Sign Up</span> -->
       </nuxt-link>
-    </v-toolbar-title>
 
-    <v-spacer></v-spacer>
+      <nuxt-link to="/cart" class="d-flex">
+        <font-awesome-icon
+          :icon="['fas', 'shopping-cart']"
+          class="menu__icon mr-2"
+        />
 
-    <nuxt-link to="/login">
-      <font-awesome-icon :icon="['fas', 'user']" class="menu__icon mr-2" />
-      <span>Sign In / Sign Up</span>
-    </nuxt-link>
+        <!-- <div>Cart</div> -->
+        <v-avatar
+          color="success"
+          size="22"
+          class="cart__avatar"
+          v-if="cartOrders"
+          >{{ cartOrders.length }}</v-avatar
+        >
+        <!-- <span v-if="cartOrders">{{ cartOrders.length }}</span> -->
+      </nuxt-link>
 
-    <nuxt-link to="/cart" class="d-flex">
-      <font-awesome-icon :icon="['fas', 'shopping-cart']" class="menu__icon" />
-      <div>Cart</div>
-      <span v-if="cartOrders">{{ cartOrders.length }}</span>
-    </nuxt-link>
-  </v-toolbar>
+      <font-awesome-icon
+        @click.stop="drawer = !drawer"
+        :icon="['fas', 'bars']"
+        class="menu__icon mr-2 menu__drawer"
+        style="font-size: 26px"
+      />
+    </v-toolbar>
+    <v-navigation-drawer v-model="drawer" absolute right temporary>
+      <template v-slot:prepend>
+        <v-list-item two-line>
+          <v-list-item-avatar>
+            <img src="https://randomuser.me/api/portraits/women/81.jpg" />
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+            <v-list-item-title>Jane Smith</v-list-item-title>
+            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+
+      <v-divider></v-divider>
+
+      <v-list dense>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </div>
 </template>
 
 <script>
@@ -33,6 +99,7 @@ export default {
   data() {
     return {
       cartOrders: this.$store.state.orders,
+      drawer: false,
     };
   },
 
@@ -55,6 +122,23 @@ export default {
 nav.navbar {
   background: #1e1e24;
 }
+
+.v-navigation-drawer--temporary {
+  z-index: 12;
+}
+
+.cart__avatar {
+  font-size: 12px;
+  left: -16px;
+  top: -13px;
+  box-shadow: 1px 1px 5px #0000004f;
+}
+
+.v-icon.v-icon.header__menu {
+  color: rgba(255, 255, 255, 0.849);
+  text-decoration: none;
+  font-size: 22px;
+}
 #index header {
   margin-bottom: -48px;
   position: relative;
@@ -64,13 +148,61 @@ nav.navbar {
   color: #fff;
 
   a {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.849);
     text-decoration: none;
+    font-size: 22px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+
+    &:first-child {
+      min-width: 200px;
+    }
 
     &:hover {
       color: #fff;
       text-decoration: none;
     }
+  }
+}
+
+#product,
+#cart {
+  header {
+    margin-bottom: -48px;
+    position: relative;
+    z-index: 9;
+    box-shadow: none;
+    padding: 10px;
+    color: #fff;
+
+    a {
+      color: rgba(255, 255, 255, 0.849);
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+
+      &:first-child {
+        min-width: 200px;
+      }
+
+      &:hover {
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.menu__drawer {
+  color: rgba(255, 255, 255, 0.849);
+  cursor: pointer;
+
+  &:hover {
+    color: #fff;
+    text-decoration: none;
   }
 }
 </style>

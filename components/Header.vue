@@ -1,7 +1,7 @@
 <template>
   <div class="header__bg">
     <div class="games__slider">
-      <div style="width: 100%; display: inline-block;">
+      <div style="width: 100%; display: inline-block">
         <div class="games-slider__parent">
           <div class="games-slider__child"></div>
         </div>
@@ -12,7 +12,9 @@
 
           <h3>Built for true gaming lovers</h3>
 
-          <h5>Built for gamers, eSports fans, game fans &amp; true gaming lovers</h5>
+          <h5>
+            Built for gamers, eSports fans, game fans &amp; true gaming lovers
+          </h5>
 
           <a href class="btn btn-orange" tabindex="0">BUY GAMES</a>
         </div>
@@ -25,6 +27,29 @@
 </script>
 
 <style lang="scss">
+header {
+  margin-bottom: -48px;
+  position: relative;
+  z-index: 9;
+  box-shadow: none;
+  padding: 10px;
+  color: #fff;
+
+  a {
+    color: rgba(255, 255, 255, 0.849);
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+}
+
 .header__bg {
   color: #fff;
 
@@ -54,6 +79,25 @@
   width: 100%;
   height: 600px;
   overflow: hidden;
+}
+
+#product, #cart {
+  .games-slider__parent {
+    height: 178px;
+  }
+
+  .games-slider__child {
+    animation: none;
+    background-position: top;
+  }
+
+  .games-slider__content {
+    display: none;
+  }
+
+  .breadcrumbs__wrap {
+    margin-top: -31px;
+  }
 }
 
 .games-slider__child {
