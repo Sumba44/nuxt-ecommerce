@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container home__categories__wrap">
-      <nuxt-link :to="'action'" :id="1" class="home__categories__href">
+      <nuxt-link :to="'51'" class="home__categories__href">
         <div class="home__categories">
           <img
             src="https://damido.sk/themes/games/assets/img/steam.png"

@@ -19,17 +19,31 @@
 
                 <v-list-item v-for="subItem in item.items" :key="subItem.title">
                   <v-list-item-content>
-                    <v-list-item-title v-text="subItem.title"></v-list-item-title>
+                    <v-list-item-title
+                      v-text="subItem.title"
+                    ></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-group>
             </v-list>
             <h5>Filter</h5>
-            <v-switch v-model="switch1" label="In Stock" color="success"></v-switch>
+            <v-switch
+              v-model="switch1"
+              label="In Stock"
+              color="success"
+            ></v-switch>
 
-            <v-switch v-model="switch2" label="Filtered" color="success"></v-switch>
+            <v-switch
+              v-model="switch2"
+              label="Filtered"
+              color="success"
+            ></v-switch>
 
-            <v-switch v-model="switch3" label="Online Distribution" color="success"></v-switch>
+            <v-switch
+              v-model="switch3"
+              label="Online Distribution"
+              color="success"
+            ></v-switch>
 
             <h5>Price range</h5>
             <div class="price__slider">
@@ -93,20 +107,24 @@
                   :color="getColor(data.item)"
                   @click:close="data.parent.selectItem(data.item)"
                   deletable-chips
-                >{{ data.item }}</v-chip>
+                  >{{ data.item }}</v-chip
+                >
               </template>
             </v-combobox>
           </div>
         </div>
         <div class="col-md-9">
-          <h6>Games</h6>
-          <h2 class="mb-5">Most Popular Games</h2>
+          <h6>products</h6>
+          <h2 class="mb-5">Most Popular products</h2>
           <div class="row mb-4">
             <div class="col text-right">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                    <font-awesome-icon :icon="['fas', 'sort']" class="mr-1" />Sort products
+                    <font-awesome-icon
+                      :icon="['fas', 'sort']"
+                      class="mr-1"
+                    />Sort products
                   </v-btn>
                 </template>
                 <v-list>
@@ -120,29 +138,28 @@
           <div class="row">
             <!-- doc.slug.substr(1) -->
             <nuxt-link
-              :to="game.genres[0].name + '/' + game.slug"
-              v-for="game in games"
-              :key="game.id"
+              :to="product.category_slug + '/' + product.slug"
+              v-for="product in products"
+              :key="product.product_id"
               class="col-md-3 category__product-wrap"
-              :id="game.slug"
             >
               <div class="category__product">
                 <div
                   class="product__miniature"
-                  :style="{ backgroundImage: `url(${game.background_image})` }"
+                  :style="{ backgroundImage: `url(${product.product_image})` }"
                 ></div>
                 <div class="product__miniature-body">
-                  <!-- <h4>{{ game.name.substring(0, 35) + ".." }}</h4> -->
-                  <h4>{{ game.name }}</h4>
+                  <h4>{{ product.product_name.substring(0, 35) + ".." }}</h4>
+                  <!-- <h4>{{ product.product_name }}</h4> -->
                   <client-only>
                     <StarRating
-                      :rating="parseInt(game.rating.toFixed(0))"
+                      :rating="parseInt(product.rating.toFixed(0))"
                       :star-size="18"
                       text-class="product__star-rating d-none"
                       read-only
                     ></StarRating>
                   </client-only>
-                  <span>{{ game.genres[0].name }}</span>
+                  <span>{{ product.category }}</span>
                 </div>
               </div>
             </nuxt-link>
@@ -178,10 +195,10 @@ export default {
 
   async asyncData({ params, error }) {
     return axios
-      .get(`https://api.rawg.io/api/games`)
+      .get(`http://localhost:5050/api/public/getallproductsincategory/top`)
       .then((res) => {
-        return { games: res.data.results };
-        console.log(res.data.results);
+        // console.log(res.data);
+        return { products: res.data };
       })
       .catch((err) => {
         error({ statusCode: 404, message: err.message });
@@ -192,7 +209,7 @@ export default {
     var rand = Math.floor(Math.random() * 5 + 3);
 
     return {
-      games: null,
+      products: null,
       pagination: [
         { link: "/brands", text: "1" },
         { link: "", text: "2" },
@@ -279,9 +296,9 @@ export default {
 
     async breadcrumbsNext(site) {
       await axios
-        .get(`https://api.rawg.io/api/games?page=${site}`)
+        .get(`https://api.rawg.io/api/products?page=${site}`)
         .then((res) => {
-          this.games = res.data.results;
+          this.products = res.data.results;
           console.log(res.data.results);
         })
         .catch((err) => {

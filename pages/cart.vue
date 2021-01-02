@@ -10,7 +10,30 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col v-if="orders.length < 1" class="d-flex justify-content-center align-items-center">
+        <v-col>
+          <v-stepper alt-labels elevation="8">
+            <v-stepper-header>
+              <v-stepper-step step="3" complete> Ad type </v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step step="4" complete> Ad style </v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step step="5">
+                Custom channels
+                <small>Alert message</small>
+              </v-stepper-step>
+            </v-stepper-header>
+          </v-stepper>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          v-if="orders.length < 1"
+          class="d-flex justify-content-center align-items-center"
+        >
           <div class="lds-ring">
             <div></div>
             <div></div>
@@ -25,20 +48,22 @@
               :key="order.id"
               class="col-12 shopping-cart__wrap"
             >
-              <nuxt-link :to="'/category/games/' + order.id">
+              <nuxt-link :to="order.category + '/' + order.slug">
                 <div
                   class="shopping-cart__image"
                   :style="{ backgroundImage: `url(${order.cover})` }"
                 ></div>
               </nuxt-link>
               <div>
-                <nuxt-link :to="'/category/games/' + order.id">
+                <nuxt-link :to="order.category + '/' + order.slug">
                   <h5>{{ order.name }}</h5>
                 </nuxt-link>
-                <div class="shopping-cart__product-code">code: {{ order.id }}</div>
-                <div
-                  class="shopping-cart__current-price text-success"
-                >{{ order.price * order.quantity }}€</div>
+                <div class="shopping-cart__product-code">
+                  code: {{ order.id }}
+                </div>
+                <div class="shopping-cart__current-price text-success">
+                  {{ order.price * order.quantity }}€
+                </div>
                 <p class="shopping-cart__info-label">
                   <b>Unit price:</b>
                   {{ order.price }}€
@@ -48,7 +73,11 @@
                   {{ order.quantity }}pcs
                 </p>
               </div>
-              <button type="button" class="shopping-cart__delete" @click="deleteOrder(index)">
+              <button
+                type="button"
+                class="shopping-cart__delete"
+                @click="deleteOrder(index)"
+              >
                 <v-icon>mdi-trash-can</v-icon>
               </button>
             </div>
@@ -76,9 +105,13 @@
               <span class="cart__label">
                 <b>Total price:</b>
               </span>
-              <span class="price__total text-success">{{ totalPrice.toFixed(2) }}€</span>
+              <span class="price__total text-success"
+                >{{ totalPrice.toFixed(2) }}€</span
+              >
             </div>
-            <v-btn @click="sendOrder()" color="success mt-8 mb-5" large block>Checkout</v-btn>
+            <v-btn @click="sendOrder()" color="success mt-8 mb-5" large block
+              >Checkout</v-btn
+            >
           </div>
         </v-col>
       </v-row>
@@ -90,7 +123,7 @@
 <script>
 // import { mapState } from 'vuex'
 import axios from "axios";
-import Header from "~/components/Header.vue"
+import Header from "~/components/Header.vue";
 import MenuTop from "~/components/MenuTop.vue";
 import Breadcrumbs from "~/components/Breadcrumbs.vue";
 import Footer from "~/components/Footer.vue";
@@ -129,42 +162,48 @@ export default {
     },
 
     formatDate(date) {
-        var hours = date.getHours();
-        var minutes = (date.getMinutes()<10?'0':'') + date.getMinutes();
-        var strTime = hours + ':' + minutes;
-        return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + strTime;
-     
+      var hours = date.getHours();
+      var minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+      var strTime = hours + ":" + minutes;
+      return (
+        date.getDate() +
+        "/" +
+        (date.getMonth() + 1) +
+        "/" +
+        date.getFullYear() +
+        " " +
+        strTime
+      );
 
       // var d = new Date();
       // var e = formatDate(d);
-  },
-    
+    },
+
     // Send order to backend
     async sendOrder() {
-
       let date = this.formatDate(new Date());
 
       await axios
         .post(
-          "http://localhost:3000/api/addorder",
+          "http://localhost:5050/api/public/addorder",
           {
             id: null,
             cart: this.$store.state.orders,
-            date: date
+            date: date,
           },
           {
             headers: {
-              "Content-type": "application/json"
-            }
+              "Content-type": "application/json",
+            },
           }
         )
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         })
-        .then(response => {
+        .then((response) => {
           console.log("Order was sent successfully!");
         });
-    }
+    },
   },
 
   computed: {

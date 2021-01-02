@@ -1,22 +1,29 @@
 <template>
   <div class="header__bg">
-    <div class="games__slider">
+    <div class="nuxt__slider">
       <div style="width: 100%; display: inline-block">
-        <div class="games-slider__parent">
-          <div class="games-slider__child"></div>
+        <div class="nuxt-slider__parent">
+          <div class="nuxt-slider__child"></div>
         </div>
       </div>
-      <div class="container">
-        <div class="games-slider__content">
-          <h4>Gamers This Is For You</h4>
-
-          <h3>Built for true gaming lovers</h3>
-
-          <h5>
-            Built for gamers, eSports fans, game fans &amp; true gaming lovers
-          </h5>
-
-          <a href class="btn btn-orange" tabindex="0">BUY GAMES</a>
+      <div class="nuxt__slider__wrap">
+        <div class="container">
+          <v-row class="align-items-center justify-space-between">
+            <div class="nuxt-slider__content">
+              <h4>Gamers This Is For You</h4>
+  
+              <h3>Built for true gaming lovers</h3>
+  
+              <h5>
+                Built for gamers, eSports fans, game fans &amp; true gaming lovers
+              </h5>
+  
+              <a href class="btn btn-orange" tabindex="0">BUY GAMES</a>
+            </div>
+            <div class="nuxt-slider__right">
+              <img src="~/assets/img/bg_small.jpg" />
+            </div>
+          </v-row>
         </div>
       </div>
     </div>
@@ -71,27 +78,34 @@ header {
   }
 }
 
-.games__slider {
+.nuxt__slider {
   position: relative;
 }
 
-.games-slider__parent {
+.nuxt__slider__wrap {
+  position: absolute;
+  top: 10%;
+  width: 100%;
+}
+
+.nuxt-slider__parent {
   width: 100%;
   height: 600px;
   overflow: hidden;
 }
 
-#product, #cart {
-  .games-slider__parent {
+#product,
+#cart {
+  .nuxt-slider__parent {
     height: 178px;
   }
 
-  .games-slider__child {
+  .nuxt-slider__child {
     animation: none;
     background-position: top;
   }
 
-  .games-slider__content {
+  .nuxt-slider__content {
     display: none;
   }
 
@@ -100,57 +114,18 @@ header {
   }
 }
 
-.games-slider__child {
+.nuxt-slider__child {
   width: 100%;
   height: 100%;
   background-color: black; /* fallback color */
-  background-image: url("https://damido.sk/themes/games/assets/img/games-bg.jpg");
-  background-position: center;
-  background-size: cover;
-
-  background-size: auto;
-  background-repeat: repeat;
-  position: relative;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -webkit-animation: zoomin 25s ease-in infinite;
-  animation: zoomin 25s ease-in infinite;
-  transition: all 1s ease-in-out;
-  overflow: hidden;
 }
 
-@-webkit-keyframes zoomin {
-  0% {
-    transform: scale(1.2);
-  }
-  50% {
-    transform: scale(1.4);
-  }
-  100% {
-    transform: scale(1.4);
-  }
-}
-@keyframes zoomin {
-  0% {
-    transform: scale(1.2);
-  }
-  50% {
-    transform: scale(1.4);
-  }
-  100% {
-    transform: scale(1.2);
-  }
-}
-
-.games-slider__content {
-  position: absolute;
-  top: -18px;
-  height: 100%;
+.nuxt-slider__content {
   display: flex;
   align-items: center;
   align-items: flex-start;
   flex-direction: column;
   justify-content: center;
+  margin-right: 50px;
 }
 </style>

@@ -9,18 +9,20 @@
           cols="12"
           md="6"
           class="product__image"
-          :style="{ backgroundImage: `url(${games.background_image})` }"
+          :style="{ backgroundImage: `url(${product.product_image})` }"
         ></v-col>
         <v-col cols="12" md="6" class="product__box">
-          <h1 class="product__heading">{{ games.name }}</h1>
+          <h1 class="product__heading">{{ product.product_name }}</h1>
           <div class="product__code mb-2">
-            Platform: {{ games.genres[0].name }} | Code: {{ games.id }}
+            Platform: {{ product.product_name }} | Code:
+            {{ product.product_id }}
           </div>
           <client-only>
             <StarRating
-              :rating="parseInt(games.rating.toFixed(0))"
-              :star-size="22"
-              text-class="product__star-rating"
+              :rating="parseInt(product.rating.toFixed(0))"
+              :star-size="18"
+              text-class="product__star-rating d-none"
+              read-only
             ></StarRating>
           </client-only>
           <div class="product__prices">
@@ -34,16 +36,16 @@
           <div class="product-features">
             <dl class="data-sheet">
               <dt class="name">Release date</dt>
-              <dd class="value">{{ games.released }}</dd>
+              <dd class="value">12.12.2020</dd>
               <dt class="name">Developer</dt>
-              <dd class="value">{{ games.developers[0].name }}</dd>
+              <dd class="value">Some developer</dd>
             </dl>
           </div>
 
           <div class="product__availability">
             <h5 class="text-success">
               In Stock
-              <span>({{ Math.floor(Math.random() * 50 + 9) }}pcs)</span>
+              <span>{{ product.quantity }} pcs</span>
             </h5>
             <p>
               Next day delivery
@@ -73,12 +75,7 @@
 
               <div class="col">
                 <nuxt-link to="/cart">
-                  <v-btn
-                    color="success"
-                    @click="addToCart()"
-                    x-large
-                    block
-                  >
+                  <v-btn color="success" @click="addToCart()" x-large block>
                     <font-awesome-icon
                       :icon="['fas', 'shopping-cart']"
                       class="menu__icon"
@@ -148,23 +145,23 @@
           <iframe
             width="560"
             height="315"
-            :src="'https://www.youtube.com/embed/' + games.clip.video"
+            :src="'https://www.youtube.com/embed/' + product.product_video"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
           ></iframe>
         </v-col>
       </v-row>
-      <div class="row">
-        <div v-for="platform in games.platforms" :key="platform.id">
+      <!-- <div class="row">
+        <div v-for="platform in product.platforms" :key="platform.id">
           {{ platform.platform.name }}
           <span>,&nbsp;</span>
         </div>
-      </div>
+      </div> -->
       <div class="row">
         <div class="col">
           <h2>Product Information</h2>
-          <div v-html="games.description"></div>
+          <div v-html="product.long_desc"></div>
         </div>
       </div>
     </div>
@@ -192,11 +189,7 @@ export default {
     Header,
     Breadcrumbs,
     Footer,
-    StarRating,
-  },
-
-  props: {
-    id: String,
+    StarRating
   },
 
   data: () => {
@@ -209,9 +202,9 @@ export default {
 
   async asyncData({ params, error }) {
     return axios
-      .get(`https://api.rawg.io/api/games/${params.id}`)
+      .get(`http://localhost:5050/api/public/getproduct/${params.id}`)
       .then((res) => {
-        return { games: res.data };
+        return { product: res.data };
         console.log(res.data);
       })
       .catch((err) => {
@@ -220,36 +213,41 @@ export default {
       });
   },
 
+  // created() {
+  //   console.log(this.$route.params.category);
+  // },
+
   computed: {
     breadcrumbs() {
       const links = [
         {
-          link: this.games.parent_platforms[0].platform.name + "/",
-          text: this.games.parent_platforms[0].platform.name,
+          link: "/" + this.product.category_slug,
+          text: this.product.category,
         },
       ];
-      links.push({ link: "", text: this.games.name });
+      links.push({ link: "", text: this.product.product_name });
       return links;
     },
   },
 
   methods: {
     addToCart() {
-      var currentDate = moment(currentDate);
       this.$store.commit("SET_CART", {
-        date: currentDate,
-        cover: this.games.background_image,
-        name: this.games.name,
-        id: this.games.id,
+        date: Date.now(),
+        cover: this.product.background_image,
+        name: this.product.name,
+        id: this.product.id,
         price: this.price,
         quantity: this.quantity,
+        category: this.product.genres[0].name,
+        slug: this.product.slug,
       });
     },
   },
 
   head() {
     return {
-      title: this.games.name + " || vue-ecommerce.com",
+      title: this.product.product_name + " || vue-ecommerce.com",
       meta: [
         {
           hid: "description",
@@ -298,7 +296,7 @@ export default {
 .product__image {
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   border: 1px solid #f3f3f3;
   border-right: none;
   min-height: 300px;
@@ -335,8 +333,9 @@ export default {
 }
 
 .product__box {
-  box-shadow: -5px 5px 7px #0000000f;
-  padding: 30px 10px 10px 30px;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid #efefef;
+  padding: 30px 30px 10px 30px;
   min-height: 540px;
 }
 
@@ -378,6 +377,6 @@ export default {
 }
 
 .vnis__wrapper {
-    height: 42px;
+  height: 42px;
 }
 </style>

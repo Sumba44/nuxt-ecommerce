@@ -139,6 +139,7 @@ nav.navbar {
   text-decoration: none;
   font-size: 22px;
 }
+
 #index header {
   margin-bottom: -48px;
   position: relative;
@@ -166,8 +167,8 @@ nav.navbar {
   }
 }
 
-#product,
-#cart {
+#product, #cart {
+  
   header {
     margin-bottom: -48px;
     position: relative;

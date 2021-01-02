@@ -7,32 +7,33 @@
       <div class="row">
         <div class="col-md-12">
           <h6>Games</h6>
-          <h2 class="mb-5">Most Popular Games halo {{ category }}</h2>
+          <h2 class="mb-5">{{ products[0].category }}</h2>
 
           <div class="row">
+            <!-- doc.slug.substr(1) -->
             <nuxt-link
-              :to="game.genres[0].name + '/' + game.slug"
-              v-for="game in games"
-              :key="game.id"
+              :to="product.category_slug + '/' + product.slug"
+              v-for="product in products"
+              :key="product.product_id"
               class="col-md-3 category__product-wrap"
-              :id="game.slug"
             >
               <div class="category__product">
                 <div
                   class="product__miniature"
-                  :style="{ backgroundImage: `url(${game.background_image})` }"
+                  :style="{ backgroundImage: `url(${product.product_image})` }"
                 ></div>
                 <div class="product__miniature-body">
-                  <h4>{{ game.name }}</h4>
+                  <h4>{{ product.product_name.substring(0, 35) + ".." }}</h4>
+                  <!-- <h4>{{ product.product_name }}</h4> -->
                   <client-only>
                     <StarRating
-                      :rating="parseInt(game.rating.toFixed(0))"
+                      :rating="parseInt(product.rating.toFixed(0))"
                       :star-size="18"
                       text-class="product__star-rating d-none"
                       read-only
                     ></StarRating>
                   </client-only>
-                  <span>{{ game.genres[0].name }}</span>
+                  <span>{{ product.category }}</span>
                 </div>
               </div>
             </nuxt-link>
@@ -61,14 +62,13 @@ export default {
 
   async asyncData({ params, error }) {
     return axios
-      .get(`https://api.rawg.io/api/games?genres=1`)
+      .get(`http://localhost:5050/api/public/getallproductsincategory/${params.category}`)
       .then((res) => {
-        return { games: res.data.results };
         console.log(res.data);
+        return { products: res.data };
       })
       .catch((err) => {
         error({ statusCode: 404, message: err.message });
-        window.location.replace("/");
       });
   },
 
@@ -77,8 +77,13 @@ export default {
 
     return {
       games: null,
+      id: null
     };
   },
+
+//   created() {
+//     this.id = this.$route.query.id;
+//   },
 
   methods: {},
 
