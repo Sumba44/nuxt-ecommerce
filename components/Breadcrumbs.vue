@@ -1,6 +1,6 @@
 <template>
   <div class="breadcrumbs__wrap">
-    <div class="container">
+    <div class="container px-2 px-sm-0">
       <nav class="breadcrumbs" aria-label="breadcrumbs">
         <ul class="breadcrumb">
           <li class="breadcrumb__home">
@@ -47,7 +47,7 @@ nav.breadcrumbs {
   margin: 0;
 }
 nav ul.breadcrumb {
-  padding: 10px;
+  padding: 10px 0;
   margin: 0;
   list-style: none;
   background-color: transparent;

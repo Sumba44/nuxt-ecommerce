@@ -11,13 +11,14 @@
           <v-row class="align-items-center justify-space-between">
             <div class="nuxt-slider__content">
               <h4>Gamers This Is For You</h4>
-  
+
               <h3>Built for true gaming lovers</h3>
-  
+
               <h5>
-                Built for gamers, eSports fans, game fans &amp; true gaming lovers
+                Built for gamers, eSports fans, game fans &amp; true gaming
+                lovers
               </h5>
-  
+
               <a href class="btn btn-orange" tabindex="0">BUY GAMES</a>
             </div>
             <div class="nuxt-slider__right">
@@ -110,7 +111,11 @@ header {
   }
 
   .breadcrumbs__wrap {
-    margin-top: -31px;
+    margin-top: -8px;
+  }
+
+  .nuxt-slider__right {
+    display: none;
   }
 }
 
@@ -126,6 +131,6 @@ header {
   align-items: flex-start;
   flex-direction: column;
   justify-content: center;
-  margin-right: 50px;
+  padding: 12px;
 }
 </style>
