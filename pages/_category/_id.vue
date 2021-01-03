@@ -9,8 +9,14 @@
           cols="12"
           md="6"
           class="product__image"
-          :style="{ backgroundImage: `url(${product.product_image})` }"
-        ></v-col>
+          :style="{ 'background-image': 'url(' + product.product_image + ')' }"
+        >
+          <div class="product__sticker__wrap">
+            <div v-if="product.sale != 0" class="product__sticker product__sticker--sale">
+              Sale -{{ product.sale }}%
+            </div>
+          </div>
+        </v-col>
         <v-col cols="12" md="6" class="product__box">
           <h1 class="product__heading">{{ product.product_name }}</h1>
           <div class="product__code mb-2">
@@ -25,14 +31,21 @@
               read-only
             ></StarRating>
           </client-only>
-          <div class="product__prices">
-            <div class="product__price text-success">
-              <span class="current-price-display"
-                >{{
-                  parseFloat(product.price).toFixed(2).replace(".", ",")
-                }}
-                €</span
-              >
+          <div class="product__prices mt-5">
+            <div class="d-flex align-center">
+              <div class="product__price text-success">
+                <span class="current-price-display"
+                  >{{
+                    parseFloat(product.price * ((100 - product.sale) / 100))
+                      .toFixed(2)
+                      .replace(".", ",")
+                  }}
+                  €</span
+                >
+              </div>
+              <div v-if="product.sale != 0" class="product__price--before ml-5">
+                ({{ parseFloat(product.price).toFixed(2).replace(".", ",") }}) €
+              </div>
             </div>
             <div class="product__tax">Tax included</div>
           </div>
@@ -292,18 +305,54 @@ export default {
     font-size: 16px;
   }
 }
+
+.product__sticker__wrap {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  margin-left: -3px;
+}
+
+.product__sticker {
+  color: #fff;
+  padding: 7px 19px;
+  font-size: 16px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.21176);
+  margin: 5px 0;
+
+  &.product__sticker--sale {
+    background: $danger;
+  }
+
+  &.product__sticker--action {
+    background: $warning;
+  }
+
+  &.product__sticker--success {
+    background: $success;
+  }
+
+  &.product__sticker--primary {
+    background: $blue;
+  }
+}
+
 .product__price {
-  margin-top: 45px;
-  margin-bottom: 20px;
-  line-height: 0;
   letter-spacing: -2px;
   font-size: 36px;
   font-weight: 600;
   color: #2d8e40;
 }
 
+.product__price--before {
+  color: #000;
+  text-decoration: line-through;
+  font-size: 20px;
+}
+
 .product__heading {
-  margin-bottom: 0;
+  margin-bottom: 5px;
+  line-height: 40px;
 }
 
 .product__image {
@@ -313,6 +362,7 @@ export default {
   border: 1px solid #f3f3f3;
   border-right: none;
   min-height: 300px;
+  position: relative;
 }
 
 .product__tax {

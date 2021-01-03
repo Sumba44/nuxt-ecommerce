@@ -40,7 +40,7 @@
         style="font-size: 26px"
       />
     </v-toolbar>
-    <v-navigation-drawer v-model="drawer" absolute right temporary>
+    <v-navigation-drawer v-model="drawer" absolute right temporary dark>
       <template v-slot:prepend>
         <v-list-item two-line>
           <v-list-item-avatar>

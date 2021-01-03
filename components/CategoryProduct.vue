@@ -1,7 +1,9 @@
 <template>
   <div class="category__product">
-    <div v-if="product.sale != 0" class="category__product__sale">
-      Sale -{{ product.sale }}%
+    <div class="category__sticker__wrap">
+        <div v-if="product.sale != 0" class="category__sticker category__sticker--sale">
+          Sale -{{ product.sale }}%
+        </div>
     </div>
     <div
       class="product__miniature"
@@ -28,7 +30,7 @@
           }}
           €
         </div>
-        <div v-if="product.sale != 0" class="category__product__price--before">
+        <div v-if="product.sale != 0" class="category__product__price--before ml-2">
           ({{ parseFloat(product.price).toFixed(2).replace(".", ",") }}) €
         </div>
       </div>
@@ -93,15 +95,34 @@ export default {
   }
 }
 
-.category__product__sale {
+.category__sticker__wrap {
   position: absolute;
   top: 20px;
   margin-left: -1px;
-  background: #ec1414;
+}
+
+.category__sticker {
   color: #fff;
-  padding: 2px 7px;
+  padding: 4px 7px;
   font-size: 13px;
   box-shadow: 1px 1px 3px #00000036;
+  margin: 4px 0;
+
+  &.category__sticker--sale {
+    background: $danger;
+  }
+
+  &.category__sticker--action {
+    background: $warning;
+  }
+
+  &.category__sticker--success {
+    background: $success;
+  }
+
+  &.product__sticker--primary {
+    background: $blue;
+  }
 }
 
 .category__product__price {
@@ -111,7 +132,6 @@ export default {
 }
 
 .category__product__price--before {
-  margin-left: 13px;
   color: #000;
   text-decoration: line-through;
 }

@@ -6,7 +6,7 @@
 
     <div class="container mx-auto mt-5">
       <div class="row">
-        <div class="col-md-3 pl-0">
+        <div class="col-md-2 pl-0">
           <div class="category__filters">
             <h5>Categories</h5>
             <v-list>
@@ -113,7 +113,7 @@
             </v-combobox>
           </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
           <h6>products</h6>
           <h2 class="mb-5">Most Popular products</h2>
           <!-- <div class="row mb-4">
@@ -175,7 +175,7 @@ export default {
 
   async asyncData({ params, error }) {
     return axios
-      .get(`http://localhost:5050/api/public/getallproductsincategory/top`)
+      .get(`http://localhost:5050/api/public/getallproductsincategory/top-products`)
       .then((res) => {
         // console.log(res.data);
         return { products: res.data };
