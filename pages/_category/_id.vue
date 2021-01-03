@@ -27,7 +27,12 @@
           </client-only>
           <div class="product__prices">
             <div class="product__price text-success">
-              <span class="current-price-display">{{ price }}.00€</span>
+              <span class="current-price-display"
+                >{{
+                  parseFloat(product.price).toFixed(2).replace(".", ",")
+                }}
+                €</span
+              >
             </div>
             <div class="product__tax">Tax included</div>
           </div>
@@ -164,6 +169,11 @@
           <div v-html="product.long_desc"></div>
         </div>
       </div>
+      <Supplier
+        :supplierName="product.supplier_name"
+        :supplierDesc="product.supplier_desc"
+        :supplierLogo="product.supplier_logo"
+      />
     </div>
     <Footer />
   </div>
@@ -175,6 +185,7 @@ import NumberInputSpinner from "vue-number-input-spinner";
 import MenuTop from "~/components/MenuTop.vue";
 import Header from "~/components/Header.vue";
 import Breadcrumbs from "~/components/Breadcrumbs.vue";
+import Supplier from "~/components/Supplier.vue";
 import Footer from "~/components/Footer.vue";
 import StarRating from "vue-star-rating";
 
@@ -188,8 +199,9 @@ export default {
     MenuTop,
     Header,
     Breadcrumbs,
+    Supplier,
     Footer,
-    StarRating
+    StarRating,
   },
 
   data: () => {
@@ -283,10 +295,11 @@ export default {
 .product__price {
   margin-top: 45px;
   margin-bottom: 20px;
-  font-weight: 500;
-  font-size: 35px;
   line-height: 0;
   letter-spacing: -2px;
+  font-size: 36px;
+  font-weight: 600;
+  color: #2d8e40;
 }
 
 .product__heading {

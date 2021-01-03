@@ -1,22 +1,10 @@
 const axios = require('axios')
-// var routes = []
-// var allUsers = [{'username': 'username'}] // Getting users as an Array
-// for (var i = 0; i < allUsers.length; i++) {
-//   routeObject = {
-//     'url': '/profile/' + allUsers[i].username
-//   }
-//   routes.push(routeObject);
-// }
 
 export default {
   mode: 'universal',
   /*
   ** Headers of the page
   */
-
-  // router: {
-  //   middleware: 'cart'
-  // },
 
   server: {
     port: 8000, // default: 3000
@@ -45,9 +33,9 @@ export default {
   /*
   ** Global CSS
   */
-  css: [
-    '~assets/scss/theme.scss'
-  ],
+  // css: [
+  //   '~assets/scss/theme.scss'
+  // ],
   /*
   ** Plugins to load before mounting the App
   */
@@ -73,40 +61,15 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // 'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
     '@nuxtjs/style-resources',
     '@nuxtjs/sitemap'
-    // '@nuxtjs/auth',
-    // ['cookie-universal-nuxt', { alias: 'cookies' }],
   ],
 
-  sitemap: {
-    exclude: [
-      '/cart'
-    ],
-    path: '/sitemap.xml',
-    gzip: true,
-    generate: false,
-    routes:  async () => {
-      let { data } = await axios.get("https://api.rawg.io/api/games")
-      return data.results.map(g => '/category/games/${g.id}')
-    }
-  },
-
   styleResources: {
-    scss: ['~assets/scss/*.scss']
-  },
-
-
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
-    // baseURL: 'http://localhost:3000/api'
+    scss: ['~assets/scss/theme.scss']
   },
 
   auth: {

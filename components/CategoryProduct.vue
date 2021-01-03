@@ -14,13 +14,14 @@
         ></StarRating>
       </client-only>
       <h4>{{ product.product_name.substring(0, 40) + ".." }}</h4>
+      <span>{{ product.category }}</span>
 
-      <div class="category__product__price">{{ product.price }} €</div>
+      <div class="category__product__price">{{ parseFloat(product.price).toFixed(2).replace(".", ",") }} €</div>
 
       <div class="d-flex align-center justify-space-between mt-3">
-        <span>{{ product.category }}</span>
+        
         <span v-if="product.quantity >= 1" class="product__stock"
-          >In stock ({{ product.quantity }} pcs)</span
+          >In stock</span
         >
         <span v-else class="product__stock out-of-stock">Out of stock</span>
       </div>
@@ -81,7 +82,6 @@ export default {
   font-size: 25px;
   font-weight: 600;
   color: #2d8e40;
-  margin-top: 10px;
 }
 
 .product__miniature {
