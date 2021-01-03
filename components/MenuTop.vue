@@ -167,7 +167,7 @@ nav.navbar {
   }
 }
 
-#product, #cart {
+#product, #cart, #category {
   
   header {
     margin-bottom: -48px;

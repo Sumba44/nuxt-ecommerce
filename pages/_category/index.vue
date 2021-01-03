@@ -1,7 +1,8 @@
 <template>
-  <div id="index">
+  <div id="category">
     <MenuTop />
     <Header />
+    <Breadcrumbs :items="breadcrumbs" />
 
     <div class="container mx-auto mt-5">
       <div class="row">
@@ -31,6 +32,7 @@
 import axios from "axios";
 import MenuTop from "~/components/MenuTop.vue";
 import Header from "~/components/Header.vue";
+import Breadcrumbs from "~/components/Breadcrumbs.vue";
 import CategoryProduct from "~/components/CategoryProduct.vue";
 import Footer from "~/components/Footer.vue";
 
@@ -38,13 +40,16 @@ export default {
   components: {
     MenuTop,
     Header,
+    Breadcrumbs,
     CategoryProduct,
     Footer,
   },
 
   async asyncData({ params, error }) {
     return axios
-      .get(`http://localhost:5050/api/public/getallproductsincategory/${params.category}`)
+      .get(
+        `http://localhost:5050/api/public/getallproductsincategory/${params.category}`
+      )
       .then((res) => {
         // console.log(res.data);
         return { products: res.data };
@@ -59,13 +64,22 @@ export default {
 
     return {
       games: null,
-      id: null
+      id: null,
     };
   },
 
-//   created() {
-//     this.id = this.$route.query.id;
-//   },
+  computed: {
+    breadcrumbs() {
+      const links = [
+        {
+          link: "/" + this.products[0].category_slug,
+          text: this.products[0].category,
+        },
+      ];
+      // links.push({ link: "", text: this.products[0].product_name });
+      return links;
+    },
+  },
 
   methods: {},
 
@@ -92,5 +106,4 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>

@@ -96,7 +96,8 @@ header {
 }
 
 #product,
-#cart {
+#cart,
+#category {
   .nuxt-slider__parent {
     height: 178px;
   }

@@ -5,13 +5,18 @@
         <ul class="breadcrumb">
           <li class="breadcrumb__home">
             <nuxt-link to="/">
-              <font-awesome-icon :icon="['fas', 'home']" class="breadcrumbs__icon mr-1" />
+              <font-awesome-icon
+                :icon="['fas', 'home']"
+                class="breadcrumbs__icon mr-1"
+              />
             </nuxt-link>
           </li>
           <li
             v-for="(item, index) in items"
             :key="index"
-            :class="'breadcrumb__item' + (item.link === '' ? '--is-active':'')"
+            :class="
+              'breadcrumb__item' + (item.link === '' ? '--is-active' : '')
+            "
           >
             <nuxt-link :to="item.link">{{ item.text }}</nuxt-link>
           </li>
@@ -68,6 +73,7 @@ ul.breadcrumb li + li:before {
 ul.breadcrumb li a {
   color: $blue;
   text-decoration: none;
+  font-weight: 500;
 }
 
 ul.breadcrumb li a:hover {
@@ -77,8 +83,9 @@ ul.breadcrumb li a:hover {
 
 ul.breadcrumb li.breadcrumb__item--is-active a {
   color: initial;
-  font-weight: 400;
-  color: $blue;
+  font-weight: 300;
+  color: #000000;
   text-decoration: none;
-}
+  cursor: initial;
+  }
 </style>
