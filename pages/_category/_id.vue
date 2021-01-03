@@ -19,7 +19,7 @@
           </div>
           <client-only>
             <StarRating
-              :rating="parseInt(product.rating.toFixed(0))"
+              :rating="parseInt(product.rating)"
               :star-size="18"
               text-class="product__star-rating d-none"
               read-only
