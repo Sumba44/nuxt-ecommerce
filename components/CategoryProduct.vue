@@ -1,5 +1,8 @@
 <template>
   <div class="category__product">
+    <div v-if="product.sale != 0" class="category__product__sale">
+      Sale -{{ product.sale }}%
+    </div>
     <div
       class="product__miniature"
       :style="{ backgroundImage: `url(${product.product_image})` }"
@@ -16,10 +19,21 @@
       <h4>{{ product.product_name.substring(0, 40) + ".." }}</h4>
       <span>{{ product.category }}</span>
 
-      <div class="category__product__price">{{ parseFloat(product.price).toFixed(2).replace(".", ",") }} €</div>
+      <div class="d-flex align-center">
+        <div class="category__product__price">
+          {{
+            parseFloat(product.price * ((100 - product.sale) / 100))
+              .toFixed(2)
+              .replace(".", ",")
+          }}
+          €
+        </div>
+        <div v-if="product.sale != 0" class="category__product__price--before">
+          ({{ parseFloat(product.price).toFixed(2).replace(".", ",") }}) €
+        </div>
+      </div>
 
       <div class="d-flex align-center justify-space-between mt-3">
-        
         <span v-if="product.quantity >= 1" class="product__stock"
           >In stock</span
         >
@@ -34,7 +48,7 @@ import StarRating from "vue-star-rating";
 
 export default {
   components: {
-    StarRating
+    StarRating,
   },
 
   props: {
@@ -49,6 +63,7 @@ export default {
 <style lang="scss">
 .category__product {
   box-shadow: 0 0 8px rgb(0 0 0 / 6%);
+  position: relative;
 
   h4 {
     font-size: 17px;
@@ -78,10 +93,27 @@ export default {
   }
 }
 
+.category__product__sale {
+  position: absolute;
+  top: 20px;
+  margin-left: -1px;
+  background: #ec1414;
+  color: #fff;
+  padding: 2px 7px;
+  font-size: 13px;
+  box-shadow: 1px 1px 3px #00000036;
+}
+
 .category__product__price {
   font-size: 25px;
   font-weight: 600;
   color: #2d8e40;
+}
+
+.category__product__price--before {
+  margin-left: 13px;
+  color: #000;
+  text-decoration: line-through;
 }
 
 .product__miniature {
