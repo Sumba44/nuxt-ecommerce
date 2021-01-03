@@ -116,7 +116,7 @@
         <div class="col-md-9">
           <h6>products</h6>
           <h2 class="mb-5">Most Popular products</h2>
-          <div class="row mb-4">
+          <!-- <div class="row mb-4">
             <div class="col text-right">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
@@ -134,7 +134,7 @@
                 </v-list>
               </v-menu>
             </div>
-          </div>
+          </div> -->
           <div class="row">
             <nuxt-link
               :to="product.category_slug + '/' + product.slug"
