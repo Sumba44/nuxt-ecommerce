@@ -23,14 +23,7 @@
             Platform: {{ product.product_name }} | Code:
             {{ product.product_id }}
           </div>
-          <!-- <client-only>
-            <StarRating
-              :rating="parseInt(product.rating)"
-              :star-size="18"
-              text-class="product__star-rating d-none"
-              read-only
-            ></StarRating>
-          </client-only> -->
+          <StarRating :rating="parseInt(product.rating.toFixed(0))" :size="16" />
           <div class="product__prices mt-5">
             <div class="d-flex align-center">
               <div class="product__price text-success">
@@ -170,12 +163,6 @@
           ></iframe>
         </v-col>
       </v-row>
-      <!-- <div class="row">
-        <div v-for="platform in product.platforms" :key="platform.id">
-          {{ platform.platform.name }}
-          <span>,&nbsp;</span>
-        </div>
-      </div> -->
       <div class="row">
         <div class="col">
           <h2>Product Information</h2>
@@ -198,6 +185,7 @@ import NumberInputSpinner from "vue-number-input-spinner";
 import MenuTop from "~/components/MenuTop.vue";
 import Header from "~/components/Header.vue";
 import Breadcrumbs from "~/components/Breadcrumbs.vue";
+import StarRating from "~/components/StarRating.vue";
 import Supplier from "~/components/Supplier.vue";
 import Footer from "~/components/Footer.vue";
 
@@ -211,6 +199,7 @@ export default {
     MenuTop,
     Header,
     Breadcrumbs,
+    StarRating,
     Supplier,
     Footer,
   },

@@ -79,7 +79,11 @@ export default {
         "faGlobe",
         "faLaptopCode",
         "faGem",
-        "faHeart"
+        "faHeart",
+        "faStar"
+      ],
+      regular: [
+        "faStar"
       ],
       brands: [
         "faApple",

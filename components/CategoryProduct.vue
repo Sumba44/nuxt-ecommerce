@@ -10,14 +10,7 @@
       :style="{ backgroundImage: `url(${product.product_image})` }"
     ></div>
     <div class="product__miniature-body">
-      <!-- <client-only>
-        <StarRating
-          :rating="parseInt(product.rating.toFixed(0))"
-          :star-size="14"
-          text-class="product__star-rating d-none"
-          read-only
-        ></StarRating>
-      </client-only> -->
+      <StarRating :rating="parseInt(product.rating.toFixed(0))" :size="13" />
       <h4>{{ product.product_name.substring(0, 40) + ".." }}</h4>
       <span>{{ product.category }}</span>
 
@@ -46,10 +39,11 @@
 </template>
 
 <script>
+import StarRating from "~/components/StarRating.vue";
 
 export default {
   components: {
-  
+    StarRating
   },
 
   props: {
