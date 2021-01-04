@@ -23,14 +23,14 @@
             Platform: {{ product.product_name }} | Code:
             {{ product.product_id }}
           </div>
-          <client-only>
+          <!-- <client-only>
             <StarRating
               :rating="parseInt(product.rating)"
               :star-size="18"
               text-class="product__star-rating d-none"
               read-only
             ></StarRating>
-          </client-only>
+          </client-only> -->
           <div class="product__prices mt-5">
             <div class="d-flex align-center">
               <div class="product__price text-success">
@@ -200,7 +200,6 @@ import Header from "~/components/Header.vue";
 import Breadcrumbs from "~/components/Breadcrumbs.vue";
 import Supplier from "~/components/Supplier.vue";
 import Footer from "~/components/Footer.vue";
-import StarRating from "vue-star-rating";
 
 // import moment from "moment";
 
@@ -214,7 +213,6 @@ export default {
     Breadcrumbs,
     Supplier,
     Footer,
-    StarRating,
   },
 
   data: () => {
@@ -319,6 +317,7 @@ export default {
   font-size: 16px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.21176);
   margin: 5px 0;
+  font-weight: 500;
 
   &.product__sticker--sale {
     background: $danger;

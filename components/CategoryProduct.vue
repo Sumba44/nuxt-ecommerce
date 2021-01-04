@@ -10,14 +10,14 @@
       :style="{ backgroundImage: `url(${product.product_image})` }"
     ></div>
     <div class="product__miniature-body">
-      <client-only>
+      <!-- <client-only>
         <StarRating
           :rating="parseInt(product.rating.toFixed(0))"
           :star-size="14"
           text-class="product__star-rating d-none"
           read-only
         ></StarRating>
-      </client-only>
+      </client-only> -->
       <h4>{{ product.product_name.substring(0, 40) + ".." }}</h4>
       <span>{{ product.category }}</span>
 
@@ -46,11 +46,10 @@
 </template>
 
 <script>
-import StarRating from "vue-star-rating";
 
 export default {
   components: {
-    StarRating,
+  
   },
 
   props: {
@@ -59,6 +58,10 @@ export default {
   data() {
     return {};
   },
+
+//   created() {
+//       if(this.product.date_added )
+//   }
 };
 </script>
 
@@ -107,6 +110,7 @@ export default {
   font-size: 13px;
   box-shadow: 1px 1px 3px #00000036;
   margin: 4px 0;
+  font-weight: 500;
 
   &.category__sticker--sale {
     background: $danger;

@@ -2,6 +2,8 @@ const axios = require("axios");
 
 export default {
   mode: "universal",
+
+  // target: 'static',
   /*
    ** Headers of the page
    */
@@ -105,10 +107,9 @@ export default {
    */
   modules: [
     "@nuxtjs/axios",
-    "@nuxtjs/pwa",
+    // "@nuxtjs/pwa",
     "@nuxtjs/dotenv",
-    "@nuxtjs/style-resources",
-    "@nuxtjs/sitemap"
+    "@nuxtjs/style-resources"
   ],
 
   styleResources: {
