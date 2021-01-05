@@ -23,7 +23,9 @@
             Platform: {{ product.product_name }} | Code:
             {{ product.product_id }}
           </div>
+
           <StarRating :rating="parseInt(product.rating.toFixed(0))" :size="16" />
+          
           <div class="product__prices mt-5">
             <div class="d-flex align-center">
               <div class="product__price text-success">

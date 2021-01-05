@@ -3,7 +3,6 @@
     <ul class="star-rating__white">
       <li v-for="index in 5" :key="index">
         <font-awesome-icon
-          @click.stop="drawer = !drawer"
           :icon="['far', 'star']"
           class="star-rating__star white"
           :style="{ fontSize: size + 'px' }"
@@ -13,7 +12,6 @@
     <ul class="star-rating__wrap">
       <li v-for="index in rating" :key="index">
         <font-awesome-icon
-          @click.stop="drawer = !drawer"
           :icon="['fas', 'star']"
           class="star-rating__star"
           :style="{ fontSize: size + 'px' }"
