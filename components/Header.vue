@@ -44,7 +44,7 @@ header {
   color: #fff;
 
   a {
-    color: rgba(255, 255, 255, 0.849);
+    color: rgba(255, 255, 255, 0.849) !important;
     text-decoration: none;
     font-size: 22px;
     font-weight: 300;
@@ -91,33 +91,8 @@ header {
 
 .nuxt-slider__parent {
   width: 100%;
-  height: 600px;
+  height: 178px;
   overflow: hidden;
-}
-
-#product,
-#cart,
-#category {
-  .nuxt-slider__parent {
-    height: 178px;
-  }
-
-  .nuxt-slider__child {
-    animation: none;
-    background-position: top;
-  }
-
-  .nuxt-slider__content {
-    display: none;
-  }
-
-  .breadcrumbs__wrap {
-    margin-top: -8px;
-  }
-
-  .nuxt-slider__right {
-    display: none;
-  }
 }
 
 .nuxt-slider__child {
@@ -127,11 +102,29 @@ header {
 }
 
 .nuxt-slider__content {
-  display: flex;
+  display: none;
   align-items: center;
   align-items: flex-start;
   flex-direction: column;
   justify-content: center;
   padding: 12px;
+}
+
+.nuxt-slider__right {
+  display: none;
+}
+
+#index {
+  .nuxt-slider__right {
+    display: block;
+  }
+
+  .nuxt-slider__content {
+    display: flex;
+  }
+
+  .nuxt-slider__parent {
+    height: 600px;
+  }
 }
 </style>

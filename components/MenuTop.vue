@@ -140,63 +140,6 @@ nav.navbar {
   font-size: 22px;
 }
 
-#index header {
-  margin-bottom: -48px;
-  position: relative;
-  z-index: 9;
-  box-shadow: none;
-  padding: 10px;
-  color: #fff;
-
-  a {
-    color: rgba(255, 255, 255, 0.849);
-    text-decoration: none;
-    font-size: 22px;
-    font-weight: 300;
-    display: flex;
-    align-items: center;
-
-    &:first-child {
-      min-width: 200px;
-    }
-
-    &:hover {
-      color: #fff;
-      text-decoration: none;
-    }
-  }
-}
-
-#product, #cart, #category {
-  
-  header {
-    margin-bottom: -48px;
-    position: relative;
-    z-index: 9;
-    box-shadow: none;
-    padding: 10px;
-    color: #fff;
-
-    a {
-      color: rgba(255, 255, 255, 0.849);
-      text-decoration: none;
-      font-size: 22px;
-      font-weight: 300;
-      display: flex;
-      align-items: center;
-
-      &:first-child {
-        min-width: 200px;
-      }
-
-      &:hover {
-        color: #fff;
-        text-decoration: none;
-      }
-    }
-  }
-}
-
 .menu__drawer {
   color: rgba(255, 255, 255, 0.849);
   cursor: pointer;

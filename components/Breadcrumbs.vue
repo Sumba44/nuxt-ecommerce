@@ -87,5 +87,9 @@ ul.breadcrumb li.breadcrumb__item--is-active a {
   color: #000000;
   text-decoration: none;
   cursor: initial;
-  }
+}
+
+.breadcrumbs__wrap {
+  margin-top: -8px;
+}
 </style>
