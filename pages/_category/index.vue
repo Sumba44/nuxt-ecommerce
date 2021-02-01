@@ -10,13 +10,48 @@
           <h6>Games</h6>
           <h2 class="mb-5">{{ products[0].category }}</h2>
           <div id="category-filter" class="my-8">
-            <!-- <v-btn :click="sortProducts('ASC')" color="primary">Most popular</v-btn>
-            <v-btn :click="sortProducts('DESC')" color="secondary">Price High to Low</v-btn> -->
-            <v-btn color="light">Price Low to High</v-btn>
-            <v-btn color="gray">Top Rated</v-btn>
+            <v-btn
+              @click="
+                removeActive();
+                activeBtn1 = !activeBtn1;
+                sortProducts(rating, desc);
+              "
+              color="primary"
+              :outlined="!activeBtn1"
+              >Most popular</v-btn
+            >
+            <v-btn
+              @click="
+                removeActive();
+                activeBtn2 = !activeBtn2;
+                sortProducts(price, asc);
+              "
+              color="primary"
+              :outlined="!activeBtn2"
+              >Price Low to High</v-btn
+            >
+            <v-btn
+              @click="
+                removeActive();
+                activeBtn3 = !activeBtn3;
+                sortProducts(price, desc);
+              "
+              color="primary"
+              :outlined="!activeBtn3"
+              >Price High to Low</v-btn
+            >
+            <v-btn
+              @click="
+                removeActive();
+                activeBtn4 = !activeBtn4;
+                sortProducts(rating, desc);
+              "
+              color="primary"
+              :outlined="!activeBtn4"
+              >Top Rated</v-btn
+            >
           </div>
           <div class="row">
-            <!-- doc.slug.substr(1) -->
             <nuxt-link
               :to="product.category_slug + '/' + product.slug"
               v-for="product in products"
@@ -68,8 +103,14 @@ export default {
     var rand = Math.floor(Math.random() * 5 + 3);
 
     return {
-      games: null,
-      id: null,
+      activeBtn1: true,
+      activeBtn2: false,
+      activeBtn3: false,
+      activeBtn4: false,
+      price: 'price',
+      rating: 'rating',
+      asc: 'ASC',
+      desc: 'DESC'
     };
   },
 
@@ -86,21 +127,33 @@ export default {
     },
   },
 
-  // methods: {
-  //   async sortProducts(sortMethod) {
-  //     console.log(sortMethod)
-  //     await axios
-  //       .get(
-  //         `http://localhost:5050/api/public/filterproducts?category=` + this.products[0].category_slug + `&sortby=price&sortmethod=` + sortMethod
-  //       )
-  //       .catch((error) => {
-  //         console.log(error);
-  //       })
-  //       .then((res) => {
-  //         this.products = res.data;
-  //       });
-  //   },
-  // },
+  methods: {
+    async sortProducts(sortBy, sortMethod) {
+      console.log(sortMethod);
+      this.$nuxt.$loading.start();
+      await axios
+        .get(
+          `http://localhost:5050/api/public/filterproducts?category=` +
+            this.products[0].category_slug +
+            `&sortby=` + sortBy + `&sortmethod=` +
+            sortMethod
+        )
+        .catch((error) => {
+          console.log(error);
+        })
+        .then((res) => {
+          this.products = res.data;
+          this.$nuxt.$loading.finish();
+        });
+    },
+
+    removeActive() {
+      this.activeBtn1 = false;
+      this.activeBtn2 = false;
+      this.activeBtn3 = false;
+      this.activeBtn4 = false;
+    },
+  },
 
   head() {
     return {

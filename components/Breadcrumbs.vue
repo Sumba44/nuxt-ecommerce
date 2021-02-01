@@ -60,7 +60,7 @@ nav ul.breadcrumb {
 
 ul.breadcrumb li {
   display: inline;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
 }
 

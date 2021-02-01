@@ -57,17 +57,14 @@ export default {
   },
   data() {
     return {};
-  },
-
-  //   created() {
-  //       if(this.product.date_added )
-  //   }
+  }
 };
 </script>
 
 <style lang="scss">
 #comp__category-product {
-  box-shadow: 0 0 8px rgb(0 0 0 / 6%);
+  // box-shadow: 0px 4px 14px rgb(25 118 210 / 19%);
+  box-shadow: 0px 5px 11px rgb(0 0 0 / 11%);
   position: relative;
 
   h4 {
@@ -78,11 +75,11 @@ export default {
     display: block;
     margin-top: 7px;
     height: 38px;
-    color: #000;
+    color: #333;
   }
 
   span {
-    color: #000;
+    color: #333;
     font-weight: 300;
     font-size: 12px;
   }
