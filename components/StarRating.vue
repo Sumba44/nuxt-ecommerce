@@ -1,5 +1,5 @@
 <template>
-  <div id="star-rating-vue">
+  <div id="comp__star-rating">
     <ul class="star-rating__white">
       <li v-for="index in 5" :key="index">
         <font-awesome-icon
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss">
-#star-rating-vue {
+#comp__star-rating {
   position: relative;
 }
 

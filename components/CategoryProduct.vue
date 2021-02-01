@@ -1,9 +1,12 @@
 <template>
-  <div class="category__product">
+  <div id="comp__category-product">
     <div class="category__sticker__wrap">
-        <div v-if="product.sale != 0" class="category__sticker category__sticker--sale">
-          Sale -{{ product.sale }}%
-        </div>
+      <div
+        v-if="product.sale != 0"
+        class="category__sticker category__sticker--sale"
+      >
+        Sale -{{ product.sale }}%
+      </div>
     </div>
     <div
       class="product__miniature"
@@ -23,7 +26,10 @@
           }}
           €
         </div>
-        <div v-if="product.sale != 0" class="category__product__price--before ml-2">
+        <div
+          v-if="product.sale != 0"
+          class="category__product__price--before ml-2"
+        >
           ({{ parseFloat(product.price).toFixed(2).replace(".", ",") }}) €
         </div>
       </div>
@@ -43,7 +49,7 @@ import StarRating from "~/components/StarRating.vue";
 
 export default {
   components: {
-    StarRating
+    StarRating,
   },
 
   props: {
@@ -53,14 +59,14 @@ export default {
     return {};
   },
 
-//   created() {
-//       if(this.product.date_added )
-//   }
+  //   created() {
+  //       if(this.product.date_added )
+  //   }
 };
 </script>
 
 <style lang="scss">
-.category__product {
+#comp__category-product {
   box-shadow: 0 0 8px rgb(0 0 0 / 6%);
   position: relative;
 

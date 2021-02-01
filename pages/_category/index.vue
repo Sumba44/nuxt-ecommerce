@@ -9,7 +9,12 @@
         <div class="col-md-12">
           <h6>Games</h6>
           <h2 class="mb-5">{{ products[0].category }}</h2>
-
+          <div id="category-filter" class="my-8">
+            <!-- <v-btn :click="sortProducts('ASC')" color="primary">Most popular</v-btn>
+            <v-btn :click="sortProducts('DESC')" color="secondary">Price High to Low</v-btn> -->
+            <v-btn color="light">Price Low to High</v-btn>
+            <v-btn color="gray">Top Rated</v-btn>
+          </div>
           <div class="row">
             <!-- doc.slug.substr(1) -->
             <nuxt-link
@@ -44,11 +49,11 @@ export default {
     CategoryProduct,
     Footer,
   },
-
+  // `http://localhost:5050/api/public/getallproductsincategory/${params.category}`
   async asyncData({ params, error }) {
     return axios
       .get(
-        `http://localhost:5050/api/public/getallproductsincategory/${params.category}`
+        `http://localhost:5050/api/public/filterproducts?category=${params.category}&sortby=price&sortmethod=ASC`
       )
       .then((res) => {
         // console.log(res.data);
@@ -81,9 +86,21 @@ export default {
     },
   },
 
-  methods: {},
-
-  watch: {},
+  // methods: {
+  //   async sortProducts(sortMethod) {
+  //     console.log(sortMethod)
+  //     await axios
+  //       .get(
+  //         `http://localhost:5050/api/public/filterproducts?category=` + this.products[0].category_slug + `&sortby=price&sortmethod=` + sortMethod
+  //       )
+  //       .catch((error) => {
+  //         console.log(error);
+  //       })
+  //       .then((res) => {
+  //         this.products = res.data;
+  //       });
+  //   },
+  // },
 
   head() {
     return {

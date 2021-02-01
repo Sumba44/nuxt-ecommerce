@@ -116,25 +116,7 @@
         <div class="col-md-10">
           <h6>products</h6>
           <h2 class="mb-5">Most Popular products</h2>
-          <!-- <div class="row mb-4">
-            <div class="col text-right">
-              <v-menu offset-y>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="primary" dark v-bind="attrs" v-on="on">
-                    <font-awesome-icon
-                      :icon="['fas', 'sort']"
-                      class="mr-1"
-                    />Sort products
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item v-for="(item, index) in sort" :key="index">
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </div>
-          </div> -->
+          
           <div class="row">
             <nuxt-link
               :to="product.category_slug + '/' + product.slug"
