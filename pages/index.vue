@@ -9,23 +9,9 @@
         <div class="col-md-2 pl-0">
           <div class="category__filters">
             <h5>Categories</h5>
-            <v-list>
-              <v-list-group v-for="item in items" :key="item.title">
-                <template v-slot:activator>
-                  <v-list-item-content>
-                    <v-list-item-title v-text="item.title"></v-list-item-title>
-                  </v-list-item-content>
-                </template>
-
-                <v-list-item v-for="subItem in item.items" :key="subItem.title">
-                  <v-list-item-content>
-                    <v-list-item-title
-                      v-text="subItem.title"
-                    ></v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-group>
-            </v-list>
+            <ul>
+              <li v-for="category in categories" :key="category.id">{{ category.category }}</li>
+            </ul>
             <h5>Filter</h5>
             <v-switch
               v-model="switch1"
@@ -78,45 +64,12 @@
                 </template>
               </v-range-slider>
             </div>
-            <h5>Select</h5>
-            <v-combobox
-              v-model="model"
-              :items="genres"
-              hide-selected
-              label="Platform"
-              multiple
-              persistent-hint
-              deletable-chips
-              outlined
-              dense
-            ></v-combobox>
-
-            <v-combobox
-              :items="colors"
-              label="Colors"
-              multiple
-              persistent-hint
-              small-chips
-              deletable-chips
-            >
-              <template v-slot:selection="data">
-                <v-chip
-                  :key="JSON.stringify(data.item)"
-                  v-bind="data.attrs"
-                  :input-value="data.selected"
-                  :color="getColor(data.item)"
-                  @click:close="data.parent.selectItem(data.item)"
-                  deletable-chips
-                  >{{ data.item }}</v-chip
-                >
-              </template>
-            </v-combobox>
           </div>
         </div>
         <div class="col-md-10">
           <h6>products</h6>
           <h2 class="mb-5">Most Popular products</h2>
-          
+
           <div class="row">
             <nuxt-link
               :to="product.category_slug + '/' + product.slug"
@@ -152,19 +105,36 @@ export default {
     HomeCategories,
     CategoryProduct,
     Pagination,
-    Footer
+    Footer,
   },
 
   async asyncData({ params, error }) {
-    return axios
-      .get(`http://localhost:5050/api/public/getallproductsincategory/top-products`)
-      .then((res) => {
-        // console.log(res.data);
-        return { products: res.data };
-      })
+    // return await axios
+    //   .get(`http://localhost:5050/api/public/getallproductsincategory/top-products`)
+    //   .then((res) => {
+    //     // console.log(res.data);
+    //     return { products: res.data };
+    //   })
+    //   .catch((err) => {
+    //     error({ statusCode: 404, message: err.message });
+    //   });
+
+    // We can use async/await ES6 feature
+    const products = await axios
+      .get(
+        `http://localhost:5050/api/public/getallproductsincategory/top-products`
+      )
       .catch((err) => {
         error({ statusCode: 404, message: err.message });
       });
+
+    const categories = await axios
+      .get(`http://localhost:5050/api/public/getallcategories`)
+      .catch((err) => {
+        error({ statusCode: 404, message: err.message });
+      });
+
+    return { products: products.data, categories: categories.data };
   },
 
   data() {
@@ -298,5 +268,4 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>

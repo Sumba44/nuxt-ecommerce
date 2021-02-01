@@ -64,6 +64,15 @@
         </div>
       </div>
     </div>
+    <!-- <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="text-center">
+            <v-pagination v-model="page" :length="6"></v-pagination>
+          </div>
+        </div>
+      </div>
+    </div> -->
     <Footer />
   </div>
 </template>
@@ -91,7 +100,7 @@ export default {
         `http://localhost:5050/api/public/filterproducts?category=${params.category}&sortby=price&sortmethod=ASC`
       )
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         return { products: res.data };
       })
       .catch((err) => {
@@ -107,10 +116,10 @@ export default {
       activeBtn2: false,
       activeBtn3: false,
       activeBtn4: false,
-      price: 'price',
-      rating: 'rating',
-      asc: 'ASC',
-      desc: 'DESC'
+      price: "price",
+      rating: "rating",
+      asc: "ASC",
+      desc: "DESC",
     };
   },
 
@@ -135,7 +144,9 @@ export default {
         .get(
           `http://localhost:5050/api/public/filterproducts?category=` +
             this.products[0].category_slug +
-            `&sortby=` + sortBy + `&sortmethod=` +
+            `&sortby=` +
+            sortBy +
+            `&sortmethod=` +
             sortMethod
         )
         .catch((error) => {
