@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-md-12">
           <h6>Games</h6>
-          <h2 class="mb-5">{{ products[0].category }}</h2>
+          <h2 class="mb-5">{{ products.data[0].category }}</h2>
           <div id="category-filter" class="my-8">
             <v-btn
               @click="
@@ -54,7 +54,7 @@
           <div class="row">
             <nuxt-link
               :to="product.category_slug + '/' + product.slug"
-              v-for="product in products"
+              v-for="product in products.data"
               :key="product.product_id"
               class="col-md-3 category__product-wrap"
             >
@@ -64,15 +64,15 @@
         </div>
       </div>
     </div>
-    <!-- <div class="container">
+    <div class="container">
       <div class="row">
         <div class="col-12">
           <div class="text-center">
-            <v-pagination v-model="page" :length="6"></v-pagination>
+            <br /><br /><br />
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
     <Footer />
   </div>
 </template>
@@ -91,21 +91,46 @@ export default {
     Header,
     Breadcrumbs,
     CategoryProduct,
-    Footer,
+    Footer
   },
   // `http://localhost:5050/api/public/getallproductsincategory/${params.category}`
   async asyncData({ params, error }) {
     return axios
       .get(
-        `http://localhost:5050/api/public/filterproducts?category=${params.category}&sortby=price&sortmethod=ASC`
+        `http://localhost:5050/api/public/filterproducts?category=${params.category}&sortby=price&sortmethod=DESC&page=1&limit=10`
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         return { products: res.data };
       })
       .catch((err) => {
         error({ statusCode: 404, message: err.message });
       });
+  },
+
+  methods: {
+    async sortProducts(sortBy, sortMethod) {
+      // console.log(sortMethod);
+      this.$nuxt.$loading.start();
+      await axios
+        .get(
+          `http://localhost:5050/api/public/filterproducts?category=${this.products.data[0].category_slug}&sortby=${sortBy}&sortmethod=${sortMethod}&page=1&limit=10`
+        )
+        .catch((error) => {
+          console.log(error);
+        })
+        .then((res) => {
+          this.products = res.data;
+          this.$nuxt.$loading.finish();
+        });
+    },
+
+    removeActive() {
+      this.activeBtn1 = false;
+      this.activeBtn2 = false;
+      this.activeBtn3 = false;
+      this.activeBtn4 = false;
+    },
   },
 
   data() {
@@ -127,8 +152,8 @@ export default {
     breadcrumbs() {
       const links = [
         {
-          link: "/" + this.products[0].category_slug,
-          text: this.products[0].category,
+          link: "/" + this.products.data[0].category_slug,
+          text: this.products.data[0].category,
         },
       ];
       // links.push({ link: "", text: this.products[0].product_name });
@@ -136,39 +161,9 @@ export default {
     },
   },
 
-  methods: {
-    async sortProducts(sortBy, sortMethod) {
-      console.log(sortMethod);
-      this.$nuxt.$loading.start();
-      await axios
-        .get(
-          `http://localhost:5050/api/public/filterproducts?category=` +
-            this.products[0].category_slug +
-            `&sortby=` +
-            sortBy +
-            `&sortmethod=` +
-            sortMethod
-        )
-        .catch((error) => {
-          console.log(error);
-        })
-        .then((res) => {
-          this.products = res.data;
-          this.$nuxt.$loading.finish();
-        });
-    },
-
-    removeActive() {
-      this.activeBtn1 = false;
-      this.activeBtn2 = false;
-      this.activeBtn3 = false;
-      this.activeBtn4 = false;
-    },
-  },
-
   head() {
     return {
-      title: this.products[0].category + " || vue-ecommerce.com",
+      title: this.products.data[0].category + " || vue-ecommerce.com",
       meta: [
         {
           hid: "description",

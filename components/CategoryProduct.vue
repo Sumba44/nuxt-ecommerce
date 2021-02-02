@@ -164,6 +164,16 @@ export default {
   padding: 30px 25px 10px 5px;
   min-height: 540px;
 
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  a {
+    padding: 5px 0;
+    color: #333;
+  }
+
   h5 {
     margin: 30px 0 30px 0;
     border-bottom: 1px solid #e5e5e5;
