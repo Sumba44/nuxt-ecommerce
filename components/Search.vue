@@ -14,7 +14,7 @@
           :key="searchResult.category"
           :to="'/' + searchResult.category_slug"
         >
-          <h2>{{ searchResult.category }}</h2>
+          <span>{{ searchResult.category }}</span>
         </nuxt-link>
       </div>
     </div>
@@ -93,6 +93,10 @@ export default {
     width: 100%;
     border: 1px solid #ccc;
     box-shadow: 0px 5px 15px #00000026;
+
+    span {
+      padding: 5px;
+    }
   }
 }
 </style>
