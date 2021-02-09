@@ -90,6 +90,7 @@
         </div>
       </div>
     </div>
+
     <v-btn @click="breadcrumbsNext(2)">next</v-btn>
     <Pagination :items="pagination" />
     <Footer />
@@ -112,7 +113,7 @@ export default {
     HomeCategories,
     CategoryProduct,
     Pagination,
-    Footer,
+    Footer
   },
 
   async asyncData({ params, error }) {
@@ -159,64 +160,10 @@ export default {
       switch1: false,
       switch2: false,
       switch3: false,
-      genres: ["Gaming", "Programming", "Vue", "Vuetify"],
-      colors: ["Red", "Blue", "Green", "Black"],
-      model: ["Vuetify"],
-      model2: ["Green"],
-      search: null,
-      sort: [
-        { title: "Recommended" },
-        { title: "Price (low to high)" },
-        { title: "Price (high to low)" },
-        { title: "Newest" },
-        { title: "Alphabetically" },
-      ],
       min: 0,
       max: 500,
       slider: 40,
       range: [0, 500],
-      items: [
-        {
-          action: "local_activity",
-          title: "Attractions",
-          items: [{ title: "List Item" }],
-        },
-        {
-          action: "restaurant",
-          title: "Dining",
-          active: true,
-          items: [
-            { title: "Breakfast & brunch" },
-            { title: "New American" },
-            { title: "Sushi" },
-          ],
-        },
-        {
-          action: "school",
-          title: "Education",
-          items: [{ title: "List Item" }],
-        },
-        {
-          action: "directions_run",
-          title: "Family",
-          items: [{ title: "List Item" }],
-        },
-        {
-          action: "healing",
-          title: "Health",
-          items: [{ title: "List Item" }],
-        },
-        {
-          action: "content_cut",
-          title: "Office",
-          items: [{ title: "List Item" }],
-        },
-        {
-          action: "local_offer",
-          title: "Promotions",
-          items: [{ title: "List Item" }],
-        },
-      ],
     };
   },
 

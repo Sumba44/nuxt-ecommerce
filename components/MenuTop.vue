@@ -11,6 +11,10 @@
 
       <v-spacer></v-spacer>
 
+      <Search />
+
+      <v-spacer></v-spacer>
+
       <nuxt-link to="/login" class="mr-md-5">
         <font-awesome-icon :icon="['fas', 'user']" class="menu__icon mr-2" />
         <!-- <span>Sign In / Sign Up</span> -->
@@ -91,9 +95,11 @@
 
 <script>
 import Logo from "~/components/Logo.vue";
+import Search from "~/components/Search";
 export default {
   components: {
     Logo,
+    Search
   },
 
   data() {
@@ -148,5 +154,9 @@ nav.navbar {
     color: #fff;
     text-decoration: none;
   }
+}
+
+.v-toolbar__title {
+  overflow: initial;
 }
 </style>
