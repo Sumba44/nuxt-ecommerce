@@ -3,12 +3,14 @@
     <div class="search__wrapper">
       <input
         @keydown="searchFetch()"
+        @focus="searchBox = true"
+        @blur="searchBox = false"
         type="text"
         v-model="search"
         placeholder="Search title.."
       />
 
-      <div class="search__results" v-if="search.length > 2">
+      <div class="search__results" v-if="search.length > 2 && searchBox">
         <nuxt-link
           v-for="searchResult in searchResults"
           :key="searchResult.product_name"
@@ -16,7 +18,18 @@
         >
           <span>{{ searchResult.product_name }}</span>
         </nuxt-link>
+
+        <h2>Categories</h2>
+        <nuxt-link
+          v-for="(searchResultCat, index) in searchResultsCategories"
+          :key="index"
+          :to="'/' + searchResultCat.category_slug"
+        >
+          <span>{{ searchResultCat.category }}</span>
+        </nuxt-link>
       </div>
+
+      <div class="search__results2" v-if="search.length > 2"></div>
     </div>
   </div>
 </template>
@@ -37,7 +50,9 @@ export default {
   data() {
     return {
       search: "",
+      searchBox: false,
       searchResults: [{ product_name: "", slug: "" }],
+      searchResultsCategories: [{ category: "", category_slug: "" }]
     };
   },
 
@@ -54,8 +69,19 @@ export default {
             this.searchResults = res.data;
             console.log(this.searchResults);
           });
+
+          await axios
+          .get(`http://localhost:5050/api/public/searchCategories?search=${this.search}`)
+          .catch((err) => {
+            error({ statusCode: 404, message: err.message });
+          })
+          .then((res) => {
+            this.searchResultsCategories = res.data;
+            console.log(this.searchResultsCategories);
+          });
       } else {
-          this.searchResults = [{ product_name: "", slug: "" }];
+          this.searchResultsCategories = [{ product_name: "", slug: "", category: "", category_slug: "" }];
+          this.searchResultsCategories = [{ category: "", category_slug: "" }];
       }
     },
   },
