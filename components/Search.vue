@@ -10,7 +10,12 @@
         placeholder="Search title.."
       />
 
-      <div class="search__results" v-if="search.length > 2 && searchBox">
+      <div
+        @mousedown.prevent
+        @click.self="searchBox = true"
+        class="search__results"
+        v-if="search.length > 2 && searchBox"
+      >
         <nuxt-link
           v-for="searchResult in searchResults"
           :key="searchResult.product_name"
@@ -52,7 +57,7 @@ export default {
       search: "",
       searchBox: false,
       searchResults: [{ product_name: "", slug: "" }],
-      searchResultsCategories: [{ category: "", category_slug: "" }]
+      searchResultsCategories: [{ category: "", category_slug: "" }],
     };
   },
 
@@ -70,8 +75,10 @@ export default {
             console.log(this.searchResults);
           });
 
-          await axios
-          .get(`http://localhost:5050/api/public/searchCategories?search=${this.search}`)
+        await axios
+          .get(
+            `http://localhost:5050/api/public/searchCategories?search=${this.search}`
+          )
           .catch((err) => {
             error({ statusCode: 404, message: err.message });
           })
@@ -80,8 +87,10 @@ export default {
             console.log(this.searchResultsCategories);
           });
       } else {
-          this.searchResultsCategories = [{ product_name: "", slug: "", category: "", category_slug: "" }];
-          this.searchResultsCategories = [{ category: "", category_slug: "" }];
+        this.searchResultsCategories = [
+          { product_name: "", slug: "", category: "", category_slug: "" },
+        ];
+        this.searchResultsCategories = [{ category: "", category_slug: "" }];
       }
     },
   },
