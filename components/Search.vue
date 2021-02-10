@@ -10,11 +10,11 @@
 
       <div class="search__results" v-if="search.length > 2">
         <nuxt-link
-          v-for="searchResult in searchResultsF"
-          :key="searchResult.category"
-          :to="'/' + searchResult.category_slug"
+          v-for="searchResult in searchResults"
+          :key="searchResult.product_name"
+          :to="'/' + searchResult.category_slug + '/' + searchResult.slug"
         >
-          <span>{{ searchResult.category }}</span>
+          <span>{{ searchResult.product_name }}</span>
         </nuxt-link>
       </div>
     </div>
@@ -37,15 +37,16 @@ export default {
   data() {
     return {
       search: "",
-      searchResults: [{ category: "" }],
+      searchResults: [{ product_name: "", slug: "" }],
     };
   },
 
   methods: {
     async searchFetch() {
+      console.log(this.search.length);
       if (this.search.length > 1) {
         await axios
-          .get(`http://localhost:5050/api/public/getallcategories`)
+          .get(`http://localhost:5050/api/public/search?search=${this.search}`)
           .catch((err) => {
             error({ statusCode: 404, message: err.message });
           })
@@ -57,13 +58,13 @@ export default {
     },
   },
 
-  computed: {
-    searchResultsF: function () {
-      return this.searchResults.filter((category) => {
-        return category.category.toLowerCase().match(this.search.toLowerCase());
-      });
-    },
-  },
+  //   computed: {
+  //     searchResultsF: function () {
+  //       return this.searchResults.filter((search) => {
+  //         return search.product_name.toLowerCase().match(this.search.toLowerCase());
+  //       });
+  //     },
+  //   },
 };
 </script>
 
@@ -93,9 +94,22 @@ export default {
     width: 100%;
     border: 1px solid #ccc;
     box-shadow: 0px 5px 15px #00000026;
+    padding: 7px;
 
     span {
+      font-size: 17px;
+      font-weight: 500;
+      text-shadow: none;
+      color: #333;
       padding: 5px;
+      transition: 0.3s;
+    }
+
+    a {
+      &:hover {
+        background: #0000001a;
+        transition: 0.3s;
+      }
     }
   }
 }
