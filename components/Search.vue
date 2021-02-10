@@ -54,6 +54,8 @@ export default {
             this.searchResults = res.data;
             console.log(this.searchResults);
           });
+      } else {
+          this.searchResults = [{ product_name: "", slug: "" }];
       }
     },
   },
