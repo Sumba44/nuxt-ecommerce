@@ -9,7 +9,10 @@
         v-model="search"
         placeholder="Search title.."
       />
-
+      <font-awesome-icon
+        :icon="['fas', 'search']"
+        class="search__icon"
+      />
       <div
         @mousedown.prevent
         @click.self="searchBox = true"
@@ -115,6 +118,7 @@ export default {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 5px;
+    padding-left: 10px;
     position: relative;
     width: 100%;
   }
@@ -148,6 +152,14 @@ export default {
         transition: 0.3s;
       }
     }
+  }
+
+  .search__icon {
+    font-size: 19px;
+    position: absolute;
+    margin-left: -30px;
+    margin-top: 8px;
+    opacity: 0.9;
   }
 }
 </style>

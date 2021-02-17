@@ -80,7 +80,8 @@ export default {
         "faLaptopCode",
         "faGem",
         "faHeart",
-        "faStar"
+        "faStar",
+        "faSearch"
       ],
       regular: [
         "faStar"
