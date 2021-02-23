@@ -4,14 +4,13 @@
     <Header />
     <Breadcrumbs :items="breadcrumbs" />
 
-    {{ category }}
-
     <div class="container mx-auto mt-5">
-      <div class="row" v-if="results">
-        <div class="col-md-12" v-if="products[0].category.length > 0">
+      <div class="row">
+        <div class="col-md-12">
           <h6>Games</h6>
-          <h2 class="mb-5">{{ products[0].category }}</h2>
-          <div id="category-filter" class="my-8">
+          <h2 class="mb-5">{{ category[0].category }}</h2>
+          <p v-html="category[0].info"></p>
+          <div id="category-filter" class="my-8" v-if="results">
             <v-btn
               @click="
                 removeActive();
@@ -53,7 +52,7 @@
               >Top Rated</v-btn
             >
           </div>
-          <div class="row">
+          <div class="row" v-if="results">
             <nuxt-link
               :to="product.category_slug + '/' + product.slug"
               v-for="product in products"
@@ -63,9 +62,19 @@
               <CategoryProduct :product="product" />
             </nuxt-link>
           </div>
+          <div
+            class="container d-flex flex-column justify-center align-center"
+            v-else
+          >
+            <h1>404</h1>
+            <h5>This category has no products :(</h5>
+            <br />
+            <nuxt-link to="/">Return to homepage</nuxt-link>
+            <br />
+            <br />
+          </div>
         </div>
       </div>
-      <div v-else>This category has no products :(</div>
     </div>
     <div class="container">
       <div class="row">
@@ -99,7 +108,7 @@ export default {
     let productsFetchStatus = true;
     const productsFetch = await axios
       .get(
-        `http://localhost:5050/api/public/filterproducts2?category=${params.category}&sortby=price&sortmethod=DESC&page=1&limit=10`
+        `http://localhost:5050/api/public/filterproducts?category=${params.category}&sortby=price&sortmethod=DESC&page=1&limit=10`
       )
       .catch((err) => {
         productsFetchStatus = false;
@@ -107,17 +116,40 @@ export default {
 
     let categoryFetchStatus = true;
     const categoryFetch = await axios
-      .get(`http://localhost:5050/api/public/getcategoryinfo`)
+      .get(
+        `http://localhost:5050/api/public/getcategory?slug=${params.category}`
+      )
       .catch((err) => {
         categoryFetchStatus = false;
         // error({ statusCode: 404, message: err.message });
       });
 
-      return {
-        products: (productsFetchStatus) ? productsFetch.data.data : 'This category has no products :(',
-        results: (productsFetchStatus) ? true : false,
-        category: (categoryFetchStatus) ? categoryFetch.data : {category_slug: params.category, category: "Category does not exist"}
-    }
+    return {
+      products:
+        productsFetchStatus &&
+        productsFetch.data.data.length != 0 &&
+        productsFetch.data.data != undefined
+          ? productsFetch.data.data
+          : "This category has no products :(",
+      results:
+        productsFetchStatus &&
+        productsFetch.data.data.length != 0 &&
+        productsFetch.data.data != undefined
+          ? true
+          : false,
+      category:
+        categoryFetchStatus &&
+        categoryFetch.data.length != 0 &&
+        categoryFetch.data != undefined
+          ? categoryFetch.data
+          : [
+              {
+                category_slug: params.category,
+                category: "Category does not exist",
+                info: "",
+              },
+            ],
+    };
   },
 
   methods: {
@@ -171,8 +203,8 @@ export default {
     breadcrumbs() {
       const links = [
         {
-          link: "/" + this.category.category_slug,
-          text: this.category.category,
+          link: "/" + this.category[0].category_slug,
+          text: this.category[0].category,
         },
       ];
       // this.$route.params
@@ -182,7 +214,7 @@ export default {
 
   head() {
     return {
-      title: this.products[0].category + " || vue-ecommerce.com",
+      title: this.category[0].category + " || vue-ecommerce.com",
       meta: [
         {
           hid: "description",

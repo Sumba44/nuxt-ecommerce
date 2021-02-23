@@ -3,179 +3,205 @@
     <MenuTop />
     <Header />
     <Breadcrumbs :items="breadcrumbs" />
-    <v-container>
-      <v-row>
-        <v-col
-          cols="12"
-          md="6"
-          class="product__image"
-          :style="{ 'background-image': 'url(' + product.product_image + ')' }"
-        >
-          <div class="product__sticker__wrap">
-            <div v-if="product.sale != 0" class="product__sticker product__sticker--sale">
-              Sale -{{ product.sale }}%
-            </div>
-          </div>
-        </v-col>
-        <v-col cols="12" md="6" class="product__box">
-          <h1 class="product__heading">{{ product.product_name }}</h1>
-          <div class="product__code mb-2">
-            Platform: {{ product.product_name }} | Code:
-            {{ product.product_id }}
-          </div>
 
-          <StarRating :rating="parseInt(product.rating.toFixed(0))" :size="16" />
-          
-          <div class="product__prices mt-5">
-            <div class="d-flex align-center">
-              <div class="product__price text-success">
-                <span class="current-price-display"
-                  >{{
-                    parseFloat(product.price * ((100 - product.sale) / 100))
-                      .toFixed(2)
-                      .replace(".", ",")
-                  }}
-                  €</span
-                >
-              </div>
-              <div v-if="product.sale != 0" class="product__price--before ml-5">
-                ({{ parseFloat(product.price).toFixed(2).replace(".", ",") }}) €
+    <div v-if="results">
+      <v-container>
+        <v-row>
+          <v-col
+            cols="12"
+            md="6"
+            class="product__image"
+            :style="{
+              'background-image': 'url(' + product.product_image + ')',
+            }"
+          >
+            <div class="product__sticker__wrap">
+              <div
+                v-if="product.sale != 0"
+                class="product__sticker product__sticker--sale"
+              >
+                Sale -{{ product.sale }}%
               </div>
             </div>
-            <div class="product__tax">Tax included</div>
-          </div>
-
-          <div class="product__short-description"></div>
-          <div class="product-features">
-            <dl class="data-sheet">
-              <dt class="name">Release date</dt>
-              <dd class="value">12.12.2020</dd>
-              <dt class="name">Developer</dt>
-              <dd class="value">Some developer</dd>
-            </dl>
-          </div>
-
-          <div class="product__availability">
-            <h5 class="text-success">
-              In Stock
-              <span>{{ product.quantity }} pcs</span>
-            </h5>
-            <p>
-              Next day delivery
-              <font-awesome-icon
-                :icon="['fas', 'info-circle']"
-                class="info__icon"
-              />
-            </p>
-            <p class="product__digital-sub"></p>
-          </div>
-
-          <div class="product-add-to-cart">
-            <div
-              class="product-quantity flex-column flex-md-row row align-center no-gutters"
-            >
-              <div class="qty col-auto vnis__wrapper">
-                <client-only>
-                  <NumberInputSpinner
-                    :min="0"
-                    :max="10"
-                    :step="1"
-                    v-model="quantity"
-                    :integerOnly="true"
-                  />
-                </client-only>
-              </div>
-
-              <div class="col">
-                <nuxt-link to="/cart">
-                  <v-btn color="success" @click="addToCart()" x-large block>
-                    <font-awesome-icon
-                      :icon="['fas', 'shopping-cart']"
-                      class="menu__icon"
-                    />
-                    <span
-                      class="btn-add-to-cart__spinner"
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                    Add to cart
-                  </v-btn>
-                </nuxt-link>
-              </div>
+          </v-col>
+          <v-col cols="12" md="6" class="product__box">
+            <h1 class="product__heading">{{ product.product_name }}</h1>
+            <div class="product__code mb-2">
+              Platform: {{ product.product_name }} | Code:
+              {{ product.product_id }}
             </div>
-            <p class="product-minimal-quantity"></p>
-          </div>
-        </v-col>
-      </v-row>
-    </v-container>
 
-    <!-- Media box -->
-    <div class="container">
-      <div class="row media-row product__media">
-        <div class="col-12 col-md-4 media-benefit">
-          <div class="media-left">
-            <font-awesome-icon :icon="['fas', 'smile']" class="media__icon" />
-          </div>
-          <div class="media-body">
-            <h5 class="h5 font-blue">Diseños previos</h5>
-            <p>Gratis y no personalizaremos nada hasta tener tu aprobado</p>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 media-benefit">
-          <div class="media-left">
-            <font-awesome-icon
-              :icon="['fas', 'business-time']"
-              class="media__icon"
+            <StarRating
+              :rating="parseInt(product.rating.toFixed(0))"
+              :size="16"
             />
+
+            <div class="product__prices mt-5">
+              <div class="d-flex align-center">
+                <div class="product__price text-success">
+                  <span class="current-price-display"
+                    >{{
+                      parseFloat(product.price * ((100 - product.sale) / 100))
+                        .toFixed(2)
+                        .replace(".", ",")
+                    }}
+                    €</span
+                  >
+                </div>
+                <div
+                  v-if="product.sale != 0"
+                  class="product__price--before ml-5"
+                >
+                  ({{ parseFloat(product.price).toFixed(2).replace(".", ",") }})
+                  €
+                </div>
+              </div>
+              <div class="product__tax">Tax included</div>
+            </div>
+
+            <div class="product__short-description"></div>
+            <div class="product-features">
+              <dl class="data-sheet">
+                <dt class="name">Release date</dt>
+                <dd class="value">12.12.2020</dd>
+                <dt class="name">Developer</dt>
+                <dd class="value">Some developer</dd>
+              </dl>
+            </div>
+
+            <div class="product__availability">
+              <h5 class="text-success">
+                In Stock
+                <span>{{ product.quantity }} pcs</span>
+              </h5>
+              <p>
+                Next day delivery
+                <font-awesome-icon
+                  :icon="['fas', 'info-circle']"
+                  class="info__icon"
+                />
+              </p>
+              <p class="product__digital-sub"></p>
+            </div>
+
+            <div class="product-add-to-cart">
+              <div
+                class="product-quantity flex-column flex-md-row row align-center no-gutters"
+              >
+                <div class="qty col-auto vnis__wrapper">
+                  <client-only>
+                    <NumberInputSpinner
+                      :min="0"
+                      :max="10"
+                      :step="1"
+                      v-model="quantity"
+                      :integerOnly="true"
+                    />
+                  </client-only>
+                </div>
+
+                <div class="col">
+                  <nuxt-link to="/cart">
+                    <v-btn color="success" @click="addToCart()" x-large block>
+                      <font-awesome-icon
+                        :icon="['fas', 'shopping-cart']"
+                        class="menu__icon"
+                      />
+                      <span
+                        class="btn-add-to-cart__spinner"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Add to cart
+                    </v-btn>
+                  </nuxt-link>
+                </div>
+              </div>
+              <p class="product-minimal-quantity"></p>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <!-- Media box -->
+      <div class="container">
+        <div class="row media-row product__media">
+          <div class="col-12 col-md-4 media-benefit">
+            <div class="media-left">
+              <font-awesome-icon :icon="['fas', 'smile']" class="media__icon" />
+            </div>
+            <div class="media-body">
+              <h5 class="h5 font-blue">Diseños previos</h5>
+              <p>Gratis y no personalizaremos nada hasta tener tu aprobado</p>
+            </div>
           </div>
-          <div class="media-body">
-            <h5 class="h5 font-blue">Entrega en fecha siempre</h5>
-            <p>
-              Compromiso firme pues
-              <strong>te pondremos la fecha por escrito</strong>
-            </p>
+          <div class="col-12 col-md-4 media-benefit">
+            <div class="media-left">
+              <font-awesome-icon
+                :icon="['fas', 'business-time']"
+                class="media__icon"
+              />
+            </div>
+            <div class="media-body">
+              <h5 class="h5 font-blue">Entrega en fecha siempre</h5>
+              <p>
+                Compromiso firme pues
+                <strong>te pondremos la fecha por escrito</strong>
+              </p>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 media-benefit">
+            <div class="media-left">
+              <font-awesome-icon :icon="['fas', 'truck']" class="media__icon" />
+            </div>
+            <div class="media-body">
+              <h5 class="h5 font-blue">Portes Gratis</h5>
+              <p>
+                El envío de tus regalos
+                <strong>será gratis</strong> si supera los 99€ de compra
+              </p>
+            </div>
           </div>
         </div>
-        <div class="col-12 col-md-4 media-benefit">
-          <div class="media-left">
-            <font-awesome-icon :icon="['fas', 'truck']" class="media__icon" />
-          </div>
-          <div class="media-body">
-            <h5 class="h5 font-blue">Portes Gratis</h5>
-            <p>
-              El envío de tus regalos
-              <strong>será gratis</strong> si supera los 99€ de compra
-            </p>
+      </div>
+
+      <!-- Product details -->
+      <div class="container">
+        <v-row>
+          <v-col>
+            <iframe
+              width="560"
+              height="315"
+              :src="'https://www.youtube.com/embed/' + product.product_video"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </v-col>
+        </v-row>
+        <div class="row">
+          <div class="col">
+            <h2>Product Information</h2>
+            <div v-html="product.long_desc"></div>
           </div>
         </div>
+        <Supplier
+          :supplierName="product.supplier_name"
+          :supplierDesc="product.supplier_desc"
+          :supplierLogo="product.supplier_logo"
+        />
       </div>
     </div>
-
-    <!-- Product details -->
-    <div class="container">
-      <v-row>
-        <v-col>
-          <iframe
-            width="560"
-            height="315"
-            :src="'https://www.youtube.com/embed/' + product.product_video"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </v-col>
-      </v-row>
-      <div class="row">
-        <div class="col">
-          <h2>Product Information</h2>
-          <div v-html="product.long_desc"></div>
-        </div>
-      </div>
-      <Supplier
-        :supplierName="product.supplier_name"
-        :supplierDesc="product.supplier_desc"
-        :supplierLogo="product.supplier_logo"
-      />
+    <div
+      class="container d-flex flex-column justify-center align-center"
+      v-else
+    >
+      <h1>404</h1>
+      <h5>{{ product.product_name }}</h5>
+      <br />
+      <nuxt-link to="/">Return to homepage</nuxt-link>
+      <br />
+      <br />
     </div>
     <Footer />
   </div>
@@ -211,20 +237,34 @@ export default {
       game: null,
       price: Math.floor(Math.random() * 50 + 9),
       quantity: 1,
+      results: false,
     };
   },
 
   async asyncData({ params, error }) {
-    return axios
+    const productFetch = await axios
       .get(`http://localhost:5050/api/public/getproduct/${params.id}`)
-      .then((res) => {
-        return { product: res.data };
-        console.log(res.data);
-      })
       .catch((err) => {
-        error({ statusCode: 404, message: err.message });
-        window.location.replace("/");
+        return {
+          results: false,
+        };
       });
+    return {
+      product:
+        Object.keys(productFetch.data).length > 0 &&
+        productFetch.data != undefined
+          ? productFetch.data
+          : {
+              product_name: "This product doesnt exist",
+              category_slug: "",
+              category: "",
+            },
+      results:
+        Object.keys(productFetch.data).length > 0 &&
+        productFetch.data != undefined
+          ? true
+          : false,
+    };
   },
 
   // created() {
