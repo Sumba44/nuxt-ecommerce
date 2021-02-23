@@ -155,10 +155,10 @@ export default {
   }
 
   .search__icon {
-    font-size: 19px;
+    font-size: 16px;
     position: absolute;
     margin-left: -30px;
-    margin-top: 8px;
+    margin-top: 9px;
     opacity: 0.9;
   }
 }

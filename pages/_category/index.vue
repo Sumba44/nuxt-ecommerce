@@ -4,11 +4,13 @@
     <Header />
     <Breadcrumbs :items="breadcrumbs" />
 
+    {{ category }}
+
     <div class="container mx-auto mt-5">
-      <div class="row">
-        <div class="col-md-12">
+      <div class="row" v-if="results">
+        <div class="col-md-12" v-if="products[0].category.length > 0">
           <h6>Games</h6>
-          <h2 class="mb-5">{{ products.data[0].category }}</h2>
+          <h2 class="mb-5">{{ products[0].category }}</h2>
           <div id="category-filter" class="my-8">
             <v-btn
               @click="
@@ -54,7 +56,7 @@
           <div class="row">
             <nuxt-link
               :to="product.category_slug + '/' + product.slug"
-              v-for="product in products.data"
+              v-for="product in products"
               :key="product.product_id"
               class="col-md-3 category__product-wrap"
             >
@@ -63,13 +65,12 @@
           </div>
         </div>
       </div>
+      <div v-else>This category has no products :(</div>
     </div>
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <div class="text-center">
-            <br /><br /><br />
-          </div>
+          <div class="text-center"><br /><br /><br /></div>
         </div>
       </div>
     </div>
@@ -91,21 +92,32 @@ export default {
     Header,
     Breadcrumbs,
     CategoryProduct,
-    Footer
+    Footer,
   },
-  // `http://localhost:5050/api/public/getallproductsincategory/${params.category}`
+
   async asyncData({ params, error }) {
-    return axios
+    let productsFetchStatus = true;
+    const productsFetch = await axios
       .get(
-        `http://localhost:5050/api/public/filterproducts?category=${params.category}&sortby=price&sortmethod=DESC&page=1&limit=10`
+        `http://localhost:5050/api/public/filterproducts2?category=${params.category}&sortby=price&sortmethod=DESC&page=1&limit=10`
       )
-      .then((res) => {
-        // console.log(res.data);
-        return { products: res.data };
-      })
       .catch((err) => {
-        error({ statusCode: 404, message: err.message });
+        productsFetchStatus = false;
       });
+
+    let categoryFetchStatus = true;
+    const categoryFetch = await axios
+      .get(`http://localhost:5050/api/public/getcategoryinfo`)
+      .catch((err) => {
+        categoryFetchStatus = false;
+        // error({ statusCode: 404, message: err.message });
+      });
+
+      return {
+        products: (productsFetchStatus) ? productsFetch.data.data : 'This category has no products :(',
+        results: (productsFetchStatus) ? true : false,
+        category: (categoryFetchStatus) ? categoryFetch.data : {category_slug: params.category, category: "Category does not exist"}
+    }
   },
 
   methods: {
@@ -114,13 +126,13 @@ export default {
       this.$nuxt.$loading.start();
       await axios
         .get(
-          `http://localhost:5050/api/public/filterproducts?category=${this.products.data[0].category_slug}&sortby=${sortBy}&sortmethod=${sortMethod}&page=1&limit=10`
+          `http://localhost:5050/api/public/filterproducts?category=${this.products[0].category_slug}&sortby=${sortBy}&sortmethod=${sortMethod}&page=1&limit=10`
         )
         .catch((error) => {
           console.log(error);
         })
         .then((res) => {
-          this.products = res.data;
+          this.products = res.data.data;
           this.$nuxt.$loading.finish();
         });
     },
@@ -137,6 +149,13 @@ export default {
     var rand = Math.floor(Math.random() * 5 + 3);
 
     return {
+      // products: [
+      //   {
+      //     category_slug: "213",
+      //     category: "123",
+      //   },
+      // ],
+      results: false,
       activeBtn1: true,
       activeBtn2: false,
       activeBtn3: false,
@@ -152,18 +171,18 @@ export default {
     breadcrumbs() {
       const links = [
         {
-          link: "/" + this.products.data[0].category_slug,
-          text: this.products.data[0].category,
+          link: "/" + this.category.category_slug,
+          text: this.category.category,
         },
       ];
-      // links.push({ link: "", text: this.products[0].product_name });
+      // this.$route.params
       return links;
     },
   },
 
   head() {
     return {
-      title: this.products.data[0].category + " || vue-ecommerce.com",
+      title: this.products[0].category + " || vue-ecommerce.com",
       meta: [
         {
           hid: "description",
