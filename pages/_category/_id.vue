@@ -6,7 +6,7 @@
 
     <div v-if="results">
       <v-container>
-        <v-row>
+        <v-row class="m-0">
           <v-col
             cols="12"
             md="6"

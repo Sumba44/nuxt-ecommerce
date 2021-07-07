@@ -15,7 +15,7 @@
     <div class="product__miniature-body">
       <StarRating :rating="parseInt(product.rating.toFixed(0))" :size="13" />
       <h4>{{ product.product_name.substring(0, 40) + ".." }}</h4>
-      <span>{{ product.category }}</span>
+      <!-- <span>{{ product.category }}</span> -->
 
       <div class="d-flex align-center">
         <div class="category__product__price">
@@ -62,9 +62,14 @@ export default {
 </script>
 
 <style lang="scss">
+.product__miniature-body {
+  margin: 0;
+  // padding: 15px;
+}
+
 #comp__category-product {
   // box-shadow: 0px 4px 14px rgb(25 118 210 / 19%);
-  box-shadow: 0px 5px 11px rgb(0 0 0 / 11%);
+  // box-shadow: 0px 5px 11px rgb(0 0 0 / 11%);
   position: relative;
 
   h4 {
@@ -143,11 +148,6 @@ export default {
   background-size: contain;
   border: none;
   height: 265px;
-}
-
-.product__miniature-body {
-  margin: 0;
-  padding: 15px;
 }
 
 .category__product-wrap {

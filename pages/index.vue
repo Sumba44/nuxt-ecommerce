@@ -79,7 +79,7 @@
 
           <div class="row">
             <nuxt-link
-              :to="product.category_slug + '/' + product.product_slug"
+              :to="categories[0].category_slug + '/' + product.slug"
               v-for="product in products"
               :key="product.product_id"
               class="col-md-3 category__product-wrap"
