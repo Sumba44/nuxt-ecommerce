@@ -12,27 +12,27 @@
             md="6"
             class="product__image"
             :style="{
-              'background-image': 'url(' + product.product_image + ')',
+              'background-image': 'url(' + product[0].product_image + ')'
             }"
           >
             <div class="product__sticker__wrap">
               <div
-                v-if="product.sale != 0"
+                v-if="product[0].sale != 0"
                 class="product__sticker product__sticker--sale"
               >
-                Sale -{{ product.sale }}%
+                Sale -{{ product[0].sale }}%
               </div>
             </div>
           </v-col>
           <v-col cols="12" md="6" class="product__box">
-            <h1 class="product__heading">{{ product.product_name }}</h1>
+            <h1 class="product__heading">{{ product[0].product_name }}</h1>
             <div class="product__code mb-2">
-              Platform: {{ product.product_name }} | Code:
-              {{ product.product_id }}
+              ID:
+              {{ product[0].product_id }}
             </div>
 
             <StarRating
-              :rating="parseInt(product.rating.toFixed(0))"
+              :rating="parseInt(product[0].rating.toFixed(0))"
               :size="16"
             />
 
@@ -41,7 +41,9 @@
                 <div class="product__price text-success">
                   <span class="current-price-display"
                     >{{
-                      parseFloat(product.price * ((100 - product.sale) / 100))
+                      parseFloat(
+                        product[0].price * ((100 - product[0].sale) / 100)
+                      )
                         .toFixed(2)
                         .replace(".", ",")
                     }}
@@ -52,8 +54,11 @@
                   v-if="product.sale != 0"
                   class="product__price--before ml-5"
                 >
-                  ({{ parseFloat(product.price).toFixed(2).replace(".", ",") }})
-                  €
+                  ({{
+                    parseFloat(product[0].price)
+                      .toFixed(2)
+                      .replace(".", ",")
+                  }}) €
                 </div>
               </div>
               <div class="product__tax">Tax included</div>
@@ -72,7 +77,7 @@
             <div class="product__availability">
               <h5 class="text-success">
                 In Stock
-                <span>{{ product.quantity }} pcs</span>
+                <span>{{ product[0].quantity }} pcs</span>
               </h5>
               <p>
                 Next day delivery
@@ -172,7 +177,7 @@
             <iframe
               width="560"
               height="315"
-              :src="'https://www.youtube.com/embed/' + product.product_video"
+              :src="'https://www.youtube.com/embed/' + product[0].product_video"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
@@ -182,13 +187,13 @@
         <div class="row">
           <div class="col">
             <h2>Product Information</h2>
-            <div v-html="product.long_desc"></div>
+            <div v-html="product[0].long_desc"></div>
           </div>
         </div>
         <Supplier
-          :supplierName="product.supplier_name"
-          :supplierDesc="product.supplier_desc"
-          :supplierLogo="product.supplier_logo"
+          :supplierName="product[0].supplier_name"
+          :supplierDesc="product[0].supplier_desc"
+          :supplierLogo="product[0].supplier_logo"
         />
       </div>
     </div>
@@ -197,7 +202,7 @@
       v-else
     >
       <h1>404</h1>
-      <h5>{{ product.product_name }}</h5>
+      <h5>{{ product[0].product_name }}</h5>
       <br />
       <nuxt-link to="/">Return to homepage</nuxt-link>
       <br />
@@ -229,7 +234,7 @@ export default {
     Breadcrumbs,
     StarRating,
     Supplier,
-    Footer,
+    Footer
   },
 
   data: () => {
@@ -237,16 +242,16 @@ export default {
       game: null,
       price: Math.floor(Math.random() * 50 + 9),
       quantity: 1,
-      results: false,
+      results: false
     };
   },
 
   async asyncData({ params, error }) {
     const productFetch = await axios
       .get(`http://localhost:5050/api/public/getproduct/${params.id}`)
-      .catch((err) => {
+      .catch(err => {
         return {
-          results: false,
+          results: false
         };
       });
     return {
@@ -257,13 +262,13 @@ export default {
           : {
               product_name: "This product doesnt exist",
               category_slug: "",
-              category: "",
+              category: ""
             },
       results:
         Object.keys(productFetch.data).length > 0 &&
         productFetch.data != undefined
           ? true
-          : false,
+          : false
     };
   },
 
@@ -275,13 +280,13 @@ export default {
     breadcrumbs() {
       const links = [
         {
-          link: "/" + this.product.category_slug,
-          text: this.product.category,
-        },
+          link: "/" + this.$route.params.category,
+          text: this.$route.params.category
+        }
       ];
-      links.push({ link: "", text: this.product.product_name });
+      links.push({ link: "", text: this.product[0].product_name });
       return links;
-    },
+    }
   },
 
   methods: {
@@ -294,28 +299,28 @@ export default {
         price: this.price,
         quantity: this.quantity,
         category: this.product.genres[0].name,
-        slug: this.product.slug,
+        slug: this.product.slug
       });
-    },
+    }
   },
 
   head() {
     return {
-      title: this.product.product_name + " || vue-ecommerce.com",
+      title: this.product[0].product_name + " || vue-ecommerce.com",
       meta: [
         {
           hid: "description",
           name: "description",
-          content: "Product page meta description",
+          content: "Product page meta description"
         },
         {
           hid: "keywords",
           name: "keywords",
-          content: "product, page, meta, keywords",
-        },
-      ],
+          content: "product, page, meta, keywords"
+        }
+      ]
     };
-  },
+  }
 };
 </script>
 

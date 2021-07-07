@@ -8,14 +8,14 @@
       <div class="row">
         <div class="col-md-12">
           <h6>Games</h6>
-          <h2 class="mb-5">{{ category[0].category }}</h2>
-          <p v-html="category[0].info"></p>
+          <h2 class="mb-5">{{ category[0].category_name }}</h2>
+          <p v-html="category[0].category_info"></p>
           <div id="category-filter" class="my-8" v-if="results">
             <v-btn
               @click="
                 removeActive();
                 activeBtn1 = !activeBtn1;
-                sortProducts(rating, desc);
+                sortProducts('rating', 'desc');
               "
               color="primary"
               :outlined="!activeBtn1"
@@ -25,7 +25,7 @@
               @click="
                 removeActive();
                 activeBtn2 = !activeBtn2;
-                sortProducts(price, asc);
+                sortProducts('price', 'asc');
               "
               color="primary"
               :outlined="!activeBtn2"
@@ -35,7 +35,7 @@
               @click="
                 removeActive();
                 activeBtn3 = !activeBtn3;
-                sortProducts(price, desc);
+                sortProducts('price', 'desc');
               "
               color="primary"
               :outlined="!activeBtn3"
@@ -45,7 +45,7 @@
               @click="
                 removeActive();
                 activeBtn4 = !activeBtn4;
-                sortProducts(rating, desc);
+                sortProducts('rating', 'desc');
               "
               color="primary"
               :outlined="!activeBtn4"
@@ -54,7 +54,7 @@
           </div>
           <div class="row" v-if="results">
             <nuxt-link
-              :to="product.category_slug + '/' + product.slug"
+              :to="category[0].category_slug + '/' + product.slug"
               v-for="product in products"
               :key="product.product_id"
               class="col-md-3 category__product-wrap"
@@ -108,7 +108,7 @@ export default {
     let productsFetchStatus = true;
     const productsFetch = await axios
       .get(
-        `http://localhost:5050/api/public/filterproducts?category=${params.category}&sortby=price&sortmethod=DESC&page=1&limit=10`
+        `http://localhost:5050/api/public/getallproductsincategory/${params.category}?type=rating&sort=desc`
       )
       .catch((err) => {
         productsFetchStatus = false;
@@ -158,7 +158,7 @@ export default {
       this.$nuxt.$loading.start();
       await axios
         .get(
-          `http://localhost:5050/api/public/filterproducts?category=${this.products[0].category_slug}&sortby=${sortBy}&sortmethod=${sortMethod}&page=1&limit=10`
+          `http://localhost:5050/api/public/getallproductsincategory/${this.category[0].category_slug}?type=${sortBy}&sort=${sortMethod}`
         )
         .catch((error) => {
           console.log(error);
@@ -204,7 +204,7 @@ export default {
       const links = [
         {
           link: "/" + this.category[0].category_slug,
-          text: this.category[0].category,
+          text: this.category[0].category_name,
         },
       ];
       // this.$route.params
@@ -214,7 +214,7 @@ export default {
 
   head() {
     return {
-      title: this.category[0].category + " || vue-ecommerce.com",
+      title: this.category[0].category_name + " || vue-ecommerce.com",
       meta: [
         {
           hid: "description",

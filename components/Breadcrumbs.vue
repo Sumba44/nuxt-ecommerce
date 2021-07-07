@@ -1,6 +1,6 @@
 <template>
   <div class="breadcrumbs__wrap">
-    <div class="container px-2 px-sm-0">
+    <div class="container px-2 px-sm-3">
       <nav class="breadcrumbs" aria-label="breadcrumbs">
         <ul class="breadcrumb">
           <li class="breadcrumb__home">
