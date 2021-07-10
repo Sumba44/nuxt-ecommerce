@@ -15,6 +15,11 @@
 
       <v-spacer></v-spacer>
 
+      <nuxt-link to="/contact" class="mr-md-10 menu__item">
+        <!-- <font-awesome-icon :icon="['fas', 'user']" class="menu__icon mr-2" /> -->
+        Contact us!
+      </nuxt-link>
+
       <nuxt-link to="/login" class="mr-md-5">
         <font-awesome-icon :icon="['fas', 'user']" class="menu__icon mr-2" />
         <!-- <span>Sign In / Sign Up</span> -->
@@ -158,5 +163,10 @@ nav.navbar {
 
 .v-toolbar__title {
   overflow: initial;
+}
+
+.menu__item {
+  font-size: 18px;
+  font-weight: 700;
 }
 </style>

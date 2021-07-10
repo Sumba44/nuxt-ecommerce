@@ -1,7 +1,7 @@
-const axios = require("axios");
+// const axios = require("axios");
 
 export default {
-  mode: "universal",
+  // mode: "universal",
 
   // target: 'static',
   /*
